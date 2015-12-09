@@ -1,12 +1,13 @@
-OAuth Trust Whitelist API
+# Pre OAuth Entity Trust API (POET) 
+(Previously known as:OAuth Trust Whitelist API)
 
-# Document Information:
+## Document Information:
 
-## Author: Mark Scrimshire (mark@ekivemark.com)
+### Author: Mark Scrimshire (mark@ekivemark.com)
 
-Google Drive Link for comments: https://docs.google.com/document/d/1-LHUL-2iy8Y4duZGN_7Z7mCKjSMBCdo9rdOWgurQ4Zk/edit?usp=sharing
+### Google Drive Link for comments: https://docs.google.com/document/d/1-LHUL-2iy8Y4duZGN_7Z7mCKjSMBCdo9rdOWgurQ4Zk/edit?usp=sharing
 
-## Version: 1.0
+### Version: 1.1
 
 # Background
 
