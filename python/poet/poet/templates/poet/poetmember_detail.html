@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block pretitle %}{% if member.organization == None %}Viewing Member
+{% else %}Editing {{ member.organization }}{% endif %}{% endblock %}
+{% block extra_head %}
+
+{% endblock %}
+
+{% block pagename%}{% if member.organization == None %}Add Member{% else %}Viewing {{ member.organization }}{% endif %}{% endblock %}
+{% block breadcrumbs %}
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'member_list' %}">Dashboard</a></li>
+
+
+            <li class="active">{% if member.organization == None %}Add{% else %}View {% endif %}Member</li>
+        </ul>
+    </div>
+
+{% endblock %}
+{% block content %}
+
+    <div class="container col-lg-12 well">
+        <form method="post" action="" enctype="multipart/form-data" xmlns="http://www.w3.org/1999/html">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>
+                       Organization
+                    </td>
+                    <td>
+                       {{ member.organization }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hostname</td>
+                    <td>{{ member.hostname }}</td>
+                </tr>
+                <tr>
+                    <td>Owner Email</td>
+                    <td>{{ member.owner_email }}</td>
+                </tr>
+                <tr>
+                    <td>Bundle</td>
+                    <td>{{ member.bundle_reference }}</td>
+                </tr>
+                <tr>
+                    <td>Secret</td>
+                    <td>{{ member.secret_key }}</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{% url "member_list" %}"><input
+                                type="button" class="btn-danger"
+                                value="Cancel"/></a>
+                    </td>
+                    <td>
+                        <input class="btn-success btn-lg" type="submit"
+                               value="Save"/>
+                    </td>
+
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+
+{% endblock %}

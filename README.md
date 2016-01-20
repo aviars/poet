@@ -41,7 +41,9 @@ The POET (Pre-Oauth Entity Trust) API provides a mechanism for an organization w
 established Health Communities of Trust to confirm that a third party application development organization is known 
 to the community.
 
+# Recent Changes
 
+- Changed Whitelist API to POET API.
  
  
 

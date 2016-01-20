@@ -18,31 +18,31 @@ The service will enable Medicare beneficiaries to connect their data to the appl
 
 CMS needs to be able to perform some basic validation of the third party application before issuing an application key. 
 
-The purpose of this specification is to create a whitelist API that reaches out to direct messaging trust bundle providers to confirm that an entity is a valid member of a legitimate trust bundle.
+The purpose of this specification is to create a POET API that reaches out to direct messaging trust bundle providers to confirm that an entity is a valid member of a legitimate trust bundle.
 
-The whitelist API will validate the data provided and return either a 404 Not found or a 200 Ok with a datetime entry that identify when the certificate for the entity expires.
+The POET API will validate the data provided and return either a 404 Not found or a 200 Ok with a datetime entry that identify when the certificate for the entity expires.
 
 # Security
 
-The whitelist API is intended for organizations, such as CMS, that want to validate requests for third party application access against existing healthcare industry validation services such as DirectTrust or NATE (National Association for Trusted Exchange).
+The POET API is intended for organizations, such as CMS, that want to validate requests for third party application access against existing healthcare industry validation services such as DirectTrust or NATE (National Association for Trusted Exchange).
 
 The API will use OAuth2 to control authorization and the API will be offered over a secure HTTPS/SSL connection.
 
 # API Payload
 
-The call to the Whitelist API endpoint will be a PUT request with a JSON payload as follows:
+The call to the POET API endpoint will be a PUT request with a JSON payload as follows :
 
-{
-“requested_by”: requester_email,
-“bundle”: bundle_id,
-“domain”: domain,
-“owner”: owner_email,
-“shared_secret”: shared_secret,
-}
+    {
+     “requested_by”: requester_email,
+     “bundle”: bundle_id,
+     “domain”: domain,
+     “owner”: owner_email,
+     “shared_secret”: shared_secret,
+    }
 
 requested_by: this is the email address of the person making the application for, the originating site. This is typically a developers really administrator in the third party application development organization.
 
-bundle_id: this is an id to allow the whitelist API to recognize which trust bundle the entity is registered in. This allows a trust organization to accommodate multiple trust bundles.
+bundle_id: this is an id to allow the POET API to recognize which trust bundle the entity is registered in. This allows a trust organization to accommodate multiple trust bundles.
 
 domain: the is the domain that is registered in the trust bundle for the entity.
 
@@ -52,13 +52,13 @@ shared_secret: this is a key that is maintained for the entity outside of the tr
 
 # API Actions
 
-The Whitelist API will assess the content of the JSON payload. 
+The POET API will assess the content of the JSON payload. 
 
 If the submitter provides incorrect information the API will return a 404 “Not found” http response.
 
-If all of the fields are supplied correctly the API will identify the trust certificate for the entity and return the expiry date in a JSON response as follows:
+If all of the fields are supplied correctly the API will identify the trust certificate for the entity and return the expiry date in a JSON response as follows :
 
-{
-“expires”: “YYYYMMDD.HHMM”
-}
+    {
+     “validation_timestamp”: “YYYYMMDD.HHMM”
+    }
 

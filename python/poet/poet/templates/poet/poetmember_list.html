@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load url from future %}
+{% block content %}
+    <div class="block-center">
+        <h3 class="block-center-heading">{% trans "POET Organization Members" %}</h3>
+        {% if poetmembers %}
+            <ul>
+                {% for member in poetmembers %}
+                    <li>
+                        <a href="{{ member.organization }}">{{ member.hostname }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <a class="btn btn-success"
+               href="{% url "home" %}">New
+                Member</a>
+        {% else %}
+            <p>{% trans "No members found" %}. <a
+                    href="{% url 'member_create' %}">{% trans "Click here" %}</a> {% trans "if you want to register a new member" %}
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}
