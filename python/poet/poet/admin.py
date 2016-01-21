@@ -16,7 +16,7 @@ from django.contrib import admin
 
 from django.conf import settings
 
-from .models import PoetMember
+from .models import PoetMember, EntityCheckLog
 
 class PoetMemberAdmin(admin.ModelAdmin):
     """
@@ -42,4 +42,14 @@ class PoetMemberAdmin(admin.ModelAdmin):
         obj.save()
 
 
+class EntityCheckLogAdmin(admin.ModelAdmin):
+    """
+    Admin form for EntityCheckLog
+    """
+
+    list_display =  ('tx', 'organization', 'reference', 'bundle', 'timestamp', 'user')
+
+
+
 admin.site.register(PoetMember, PoetMemberAdmin)
+admin.site.register(EntityCheckLog, EntityCheckLogAdmin)

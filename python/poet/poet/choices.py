@@ -19,3 +19,9 @@ POET_BUNDLE_REFERENCE = (
     ("01_Production_Bundle", "POET Sample Production Bundle"),
     ("09_Another_Bundle", "Another POET Bundle"),
 )
+
+POET_TRANSACTION_TYPE = (
+    ("----", "None"),
+    ("EC"  , "Entity Check"),
+    ("EV"  , "Entity Still Valid")
+)

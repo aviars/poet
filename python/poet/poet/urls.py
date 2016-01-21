@@ -18,6 +18,7 @@ from django.contrib import admin
 
 from .views.hello import hello
 from .views.home import home
+from .views.api import EntityCheck
 from .views.member import (MemberList,
                            MemberView,
                            MemberCreate,
@@ -46,6 +47,10 @@ urlpatterns = patterns('',
                            name='member_update'),
     url(r'^member/(?P<pk>[0-9]+)/delete/$', MemberDeleteView.as_view(),
                            name='member_delete'),
+
+    # API
+    url(r'^api/entitycheck/$', EntityCheck,
+                           name='api_entitycheck'),
 
     # Accounts Login and Logout
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',

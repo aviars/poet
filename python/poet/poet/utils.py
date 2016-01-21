@@ -10,7 +10,13 @@ Created: 1/14/16 3:35 PM
 functions used by settings.py to read contents from local.ini settings file
 
 """
+from collections import OrderedDict
+from django.conf import settings
+from django.http import HttpResponse
+import json
+
 __author__ = 'Mark Scrimshire:@ekivemark'
+
 
 def str2bool(inp):
     output = False
@@ -26,3 +32,61 @@ def str2int(inp):
     output = 0 + int(inp)
 
     return output
+
+
+def pull_data(payload, key):
+    """
+    lookup key in the json payload and return the value
+    """
+    if key in payload:
+        if settings.DEBUG:
+            print(key, "FOUND")
+            print("Content:", payload[key])
+        return payload[key]
+    else:
+        return ""
+
+
+def kickout_400(reason, status_code=400):
+    response= OrderedDict()
+    response["code"] = status_code
+    response["errors"] = [reason,]
+    return HttpResponse(json.dumps(response, indent = 4),
+                        status=status_code,
+                        content_type="application/json")
+
+
+def kickout_401(reason, status_code=401):
+    response= OrderedDict()
+    response["code"] = status_code
+    response["errors"] = [reason,]
+    return HttpResponse(json.dumps(response, indent = 4),
+                        status=status_code,
+                        content_type="application/json")
+
+
+def kickout_403(reason, status_code=403):
+    response= OrderedDict()
+    response["code"] = status_code
+    response["errors"] = [reason,]
+    return HttpResponse(json.dumps(response, indent = 4),
+                        status=status_code,
+                        content_type="application/json")
+
+
+def kickout_404(reason, status_code=404):
+    response= OrderedDict()
+    response["code"] = status_code
+    response["errors"] = [reason,]
+    return HttpResponse(json.dumps(response, indent = 4),
+                        status=status_code,
+                        content_type="application/json")
+
+
+def kickout_500(reason, status_code=500):
+    response= OrderedDict()
+    response["code"] = status_code
+    response["errors"] = [reason,]
+    return HttpResponse(json.dumps(response, indent = 4),
+                        status=status_code,
+                        content_type="application/json")
