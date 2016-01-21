@@ -23,7 +23,7 @@ APPLICATION_TITLE = "POET"
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's4r9ctcn%h-l@$0-gg%gd37#8)wtg25se7l(0-a&yza-m92zp7'
+# SECRET_KEY = 's4r9ctcn%h-l@$0-gg%gd37#8)wtg25se7l(0-a&yza-m92zp7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -117,3 +117,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = "/accounts/login"

@@ -20,7 +20,9 @@ from .views.hello import hello
 from .views.home import home
 from .views.member import (MemberList,
                            MemberView,
-                           MemberCreate)
+                           MemberCreate,
+                           MemberUpdateView,
+                           MemberDeleteView)
 
 admin.autodiscover()
 
@@ -35,13 +37,23 @@ urlpatterns = patterns('',
     # PoetMember management
     url(r'^member/$', MemberList.as_view(),
                            name='member_list'),
-    url(r'^member/(?P<slug>[-\w]+)/$', MemberView.as_view(),
+    url(r'^member/view/(?P<pk>[0-9]+)/$', MemberView.as_view(),
                            name='member_view'),
 
-    url(r'^member/create$', MemberCreate.as_view(),
+    url(r'^member/add/$', MemberCreate.as_view(),
                            name='member_create'),
+    url(r'^member/(?P<pk>[0-9]+)/update/$', MemberUpdateView.as_view(),
+                           name='member_update'),
+    url(r'^member/(?P<pk>[0-9]+)/delete/$', MemberDeleteView.as_view(),
+                           name='member_delete'),
+
+    # Accounts Login and Logout
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+       {'template_name': 'login.html'}, name="login"),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='logout'),
 
 
+    # Administration Module
     url(r'^_admin/', include(admin.site.urls)),
 
 )

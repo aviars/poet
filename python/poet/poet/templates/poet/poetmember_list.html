@@ -4,23 +4,30 @@
 {% load url from future %}
 {% block content %}
     <div class="block-center">
-        <h3 class="block-center-heading">{% trans "POET Organization Members" %}</h3>
-        {% if poetmembers %}
-            <ul>
-                {% for member in poetmembers %}
-                    <li>
-                        <a href="{{ member.organization }}">{{ member.hostname }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+        <h3 class="block-center-heading">{% trans "POET Member Organizations" %}</h3>
 
+        <table>
+        <tr><th class="col-lg-1">Edit</th>
+            <th class="col-lg-3">Organization </th>
+            <th class="col-lg-2">Hostname</th>
+            <th class="col-lg-3">Owner Email</th>
+            <th class="col-lg-2">Bundle</th>
+            <th class="col-lg-1">Delete</th>
+        </tr>
+        {% for member in poetmembers %}
+            <tr>
+                <td class="col-lg-1"><a href="{{ member.id }}/update/"><i class="fa fa-pencil-square fa-2x"></i></a></td>
+                <td class="col-lg-3"><a href="{% url "member_view" member.id %}">{{ member.organization }}</a></td>
+                <td class="col-lg-2">{{ member.hostname }}</td>
+                <td class="col-lg-3">{{ member.owner_email }}</td>
+                <td class="col-lg-2">{{ member.bundle_reference }}</td>
+                <td class="col-lg-1"><a href="{{ member.id }}/delete/"><i class="fa fa-trash fa-1x"></i></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    <p></p>
             <a class="btn btn-success"
-               href="{% url "home" %}">New
+               href="{% url "member_create" %}">Add a New
                 Member</a>
-        {% else %}
-            <p>{% trans "No members found" %}. <a
-                    href="{% url 'member_create' %}">{% trans "Click here" %}</a> {% trans "if you want to register a new member" %}
-            </p>
-        {% endif %}
-    </div>
+     </div>
 {% endblock content %}

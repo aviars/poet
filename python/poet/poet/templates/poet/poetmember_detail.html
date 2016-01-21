@@ -26,31 +26,57 @@
             {% csrf_token %}
             <table>
                 <tr>
-                    <td>
+                    <th class="col-lg-4">
                        Organization
-                    </td>
-                    <td>
+                    </th>
+                    <td class="col-lg-8">
                        {{ member.organization }}
                     </td>
                 </tr>
                 <tr>
-                    <td>Hostname</td>
-                    <td>{{ member.hostname }}</td>
+                    <th class="col-lg-4">
+                        Hostname
+                    </th>
+                    <td class="col-lg-8">
+                        {{ member.hostname }}
+                    </td>
                 </tr>
                 <tr>
-                    <td>Owner Email</td>
-                    <td>{{ member.owner_email }}</td>
+                    <th class="col-lg-4">
+                        Owner Email
+                    </th>
+                    <td class="col-lg-8">
+                        {{ member.owner_email }}
+                    </td>
                 </tr>
                 <tr>
-                    <td>Bundle</td>
-                    <td>{{ member.bundle_reference }}</td>
+                    <th class="col-lg-4">
+                        Bundle
+                    </th>
+                    <td class="col-lg-8">
+                        {{ member.bundle_reference }}
+                    </td>
                 </tr>
                 <tr>
-                    <td>Secret</td>
-                    <td>{{ member.secret_key }}</td>
+                    <th class="col-lg-4">
+                        Secret
+                    </th>
+                    <td class="col-lg-8">
+                        {{ member.secret_key }}
+                    </td>
                 </tr>
-
+                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                 <tr>
+                    <td>
+                        <a href="/member/{{ member.id }}/update/"><i class="fa fa-pencil-square fa-2x"></i> (Edit)</a>
+                    </td>
+                    <td>
+                    {% if member.organization != None %}
+                           <a href="{% url "member_list" %}">
+                               <input type="button" class="btn-success btn-lg"
+                                value="Back"/></a>
+                    </td>
+                    {% else %}
                     <td>
                         <a href="{% url "member_list" %}"><input
                                 type="button" class="btn-danger"
@@ -60,7 +86,7 @@
                         <input class="btn-success btn-lg" type="submit"
                                value="Save"/>
                     </td>
-
+                    {% endif %}
                 </tr>
             </table>
         </form>

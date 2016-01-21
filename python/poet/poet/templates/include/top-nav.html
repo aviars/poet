@@ -9,7 +9,7 @@ Just to avoid confusion...
 {% endcomment %}
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'home' %}" contenteditable="false"
+                <a href="{% url 'member_list' %}" contenteditable="false"
                    class="navbar-brand">
                     <img src="{% static 'img/layout/poet.png' %}"
                      style="vertical-align:middle;display:inline-block;max-height:100%;max-width:100%"
@@ -17,12 +17,12 @@ Just to avoid confusion...
                 </a>
             </li>
             <li>
-                <a class="" href="{% url 'home' %}"
+                <a class="" href="{% url 'member_list' %}"
                    contenteditable="false" title="{{ settings.APPLICATION_TITLE }} Home"><i class="fa fa-home fa-lg"></i></a>
             </li>
             {% if user.is_authenticated %}
             <li>
-                <a class="" href="{% url 'home' %}"
+                <a class="" href="{% url 'member_list' %}"
                    contenteditable="false" title="{{ settings.APPLICATION_TITLE }} Home">{{ settings.APPLICATION_TITLE }}<br>Home
                 </a>
             </li>
@@ -32,6 +32,22 @@ Just to avoid confusion...
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
+            {%  if user.is_authenticated %}
+                <li>
+                    <a href="{%  url 'member_list' %}" title="Member Dashboard">
+                        <i class="fa fa-cogs"></i> {{ user.username }}</a>
+                </li>
+                <li>
+                    <a href="{% url "logout" %}?next=/{% if request.session.auth_device %}api/{% endif %}" title="Logout">
+                        {% trans "Logout" %} <i class="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url "login" %}" title="Login">
+                        {% trans "Login" %} <i class="fa fa-sign-in"></i>&nbsp;&nbsp;&nbsp;</a>
+                </li>
+            {% endif %}
+
         </ul>
 
     </div>
