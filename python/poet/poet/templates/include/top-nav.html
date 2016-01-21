@@ -13,21 +13,13 @@ Just to avoid confusion...
                    class="navbar-brand">
                     <img src="{% static 'img/layout/poet.png' %}"
                      style="vertical-align:middle;display:inline-block;max-height:100%;max-width:100%"
-                     alt="{{ settings.APPLICATION_TITLE }}">
+                     alt="POET">
                 </a>
             </li>
             <li>
                 <a class="" href="{% url 'member_list' %}"
-                   contenteditable="false" title="{{ settings.APPLICATION_TITLE }} Home"><i class="fa fa-home fa-lg"></i></a>
+                   contenteditable="false" title="POET Home"><i class="fa fa-home fa-lg"></i> POET Home</a>
             </li>
-            {% if user.is_authenticated %}
-            <li>
-                <a class="" href="{% url 'member_list' %}"
-                   contenteditable="false" title="{{ settings.APPLICATION_TITLE }} Home">{{ settings.APPLICATION_TITLE }}<br>Home
-                </a>
-            </li>
-            {% endif %}
-
 
         </ul>
 
@@ -35,10 +27,10 @@ Just to avoid confusion...
             {%  if user.is_authenticated %}
                 <li>
                     <a href="{%  url 'member_list' %}" title="Member Dashboard">
-                        <i class="fa fa-cogs"></i> {{ user.username }}</a>
+                        <i class="fa fa-cogs"></i> {{ user.get_full_name|default:user.username }}</a>
                 </li>
                 <li>
-                    <a href="{% url "logout" %}?next=/{% if request.session.auth_device %}api/{% endif %}" title="Logout">
+                    <a href="{% url "logout" %}?next=/" title="Logout">
                         {% trans "Logout" %} <i class="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;</a>
                 </li>
             {% else %}
