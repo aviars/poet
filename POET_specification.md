@@ -30,7 +30,9 @@ The API will use OAuth2 to control authorization and the API will be offered ove
 
 # API Payload
 
-The call to the POET API endpoint will be a PUT request with a JSON payload as follows :
+The API call will be a POST with a json payload to /api/entitycheck/ on the POET Server.
+
+The call to the POET API endpoint will be a POSTT request with a JSON payload as follows :
 
     {
      “requested_by”: requester_email,
@@ -52,13 +54,102 @@ shared_secret: this is a key that is maintained for the entity outside of the tr
 
 # API Actions
 
-The POET API will assess the content of the JSON payload. 
+## Entity Check (/api/entitycheck/)
+
+The POET API will analyze the content of the JSON payload and attempt a match to an entity in the trust bundle identified by the submitter. 
 
 If the submitter provides incorrect information the API will return a 404 “Not found” http response.
+
+    {
+    "code": 404,
+    "errors": [
+        "Not Found"
+    ]
+    }
 
 If all of the fields are supplied correctly the API will identify the trust certificate for the entity and return the expiry date in a JSON response as follows :
 
     {
-     “validation_timestamp”: “YYYYMMDD.HHMM”
+    "validation_timestamp": "2016-01-22T06:14:01.015919+00:00",
+    "joined_bundle": "2016-01-20T23:02:28.421837+00:00",
+    "transaction_reference": "284c9f59-4211-4a12-befe-b815b82a946d",
+    "success": true
     }
 
+### validation_timestamp
+
+The date and time when the entity was validated by the POET Server. 
+Time is in iso format.
+
+### joined_bundle
+
+The date and time when the entity was added to the Trust Bundle on the POET Server.
+Time is in iso format.
+
+### transaction_reference
+
+A unique Transaction Id issued by the POET Server.
+
+### success
+
+An indicator to confirm a successful match for the entity on the POET Server.
+A True or False value. The only value received should be True. Failed matches will return a 
+404 message.
+
+## Entity Still Valid (/api/entitystillvalid/)
+
+The POET will analyze the content of the Json payload from the POST. The POET Server will
+iterate through the list of entities and check for PoetMember.account_active = True.
+
+The name is added to the validated list if account_active = True.
+The name is added to the failed list is a record is not found or account_active = False.
+
+The json payload is as follows:
+
+    {
+     "entities": [
+       {"name": organization,
+        "bundle": bundle_id,
+        "domain": domain,
+        "owner": owner_email},
+       {"name": organization,
+        "bundle": bundle_id,
+        "domain": domain,
+        "owner": owner_email}, ...
+       ]
+    }
+
+The json payload returned is as follows:
+
+    {
+     "begin_check": "2016-01-22T01:17:10.566858",
+     "validated": [
+                   "Medyear"
+                  ],
+     "failed": [
+                "Bad_one"
+               ],
+     "end_check": "2016-01-22T01:17:10.574513"
+    }
+
+## begin_check
+
+The date and time the validation check starts in iso format
+
+## validated
+
+The list of organization names in text format that passed validation. The name is taken from
+the entities["name"] field in the submitted json payload.
+
+## failed
+
+The list of organization names in text format that failed validation. The name is taken from
+the entities["name"] field in the submitted json payload.
+
+An organization can fail validation if:
+- The PoetMember record has account_active = False
+- A PoetMember record is not found for the combination of bundle, domain and owner_email submitted
+
+## end_check
+
+The date and time the validation check end in iso format

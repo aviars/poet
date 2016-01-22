@@ -34,14 +34,30 @@ def str2int(inp):
     return output
 
 
+def body_decode2json(request):
+    """
+    Get the json input from the request.body
+    :param request:
+    :return: j
+    """
+
+    try:
+        j =json.loads(request.body.decode('utf-8'), object_pairs_hook=OrderedDict)
+        if type(j) !=  type({}):
+            kickout_400("The request body did not contain a JSON object i.e. {}.")
+
+        return j
+    except:
+        return kickout_400("The request body did not contain valid JSON.",)
+
+
+
+
 def pull_data(payload, key):
     """
     lookup key in the json payload and return the value
     """
     if key in payload:
-        if settings.DEBUG:
-            print(key, "FOUND")
-            print("Content:", payload[key])
         return payload[key]
     else:
         return ""

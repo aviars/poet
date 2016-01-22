@@ -18,7 +18,8 @@ from django.contrib import admin
 
 from .views.hello import hello
 from .views.home import home
-from .views.api import EntityCheck
+from .views.api import (EntityCheck,
+                        StillValid)
 from .views.member import (MemberList,
                            MemberView,
                            MemberCreate,
@@ -51,6 +52,8 @@ urlpatterns = patterns('',
     # API
     url(r'^api/entitycheck/$', EntityCheck,
                            name='api_entitycheck'),
+    url(r'^api/entitystillvalid/$', StillValid,
+                           name='api_entitystillvalid'),
 
     # Accounts Login and Logout
     url(r'^accounts/login/$', 'django.contrib.auth.views.login',
