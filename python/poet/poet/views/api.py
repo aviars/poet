@@ -21,7 +21,9 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from ..models import PoetMember, EntityCheckLog
+from ..models import (PoetMember,
+                      Connections,
+                      EntityCheckLog)
 from ..utils import (body_decode2json,
                      kickout_400,
                      kickout_404,
@@ -76,15 +78,17 @@ def EntityCheck(request):
                                             owner_email=owner,
                                             hostname=domain
                                             )
+            org = member.organization
             if member.active_account:
                 if member.secret_key == secret:
                     success = True
                     joined = member.created.isoformat()
+                    connection = create_connection(request.user, org)
                 else:
                     success = False
             else:
                 success = False
-            org = member.organization
+
 
         except PoetMember.DoesNotExist:
             success = False
@@ -199,3 +203,52 @@ def StillValid(request):
         return kickout_404(reason,)
 
 
+def create_connection(user, org):
+    """
+    Create a User:Organization record in Connections database
+
+    If record exists update modified date (done in the save)
+
+    :param user:
+    :param organization:
+    :return:
+    """
+
+    if user == "":
+        return ""
+    if org == "":
+        return ""
+
+    member = PoetMember.objects.get(organization=org)
+    print("Member info:", member)
+
+    if settings.DEBUG:
+        print("User:", user, "id:[", user.id,"]")
+        print("Organization:", org, "[", member.id, "]")
+
+    # We want a user AND org to test for/create/update
+
+    try:
+        connection = Connections.objects.get(user=user.id, organization=member)
+        # Do a save to update the date modified.
+        connection.save()
+        if settings.DEBUG:
+            print("We got: ", connection)
+    except Connections.DoesNotExist:
+        if settings.DEBUG:
+            print("Failed to find a record - creating")
+        connection = Connections()
+        print("Creating...")
+        connection.user = user
+        connection.organization = member
+        print("updated contents")
+        connection.save()
+        print("Saved")
+        if settings.DEBUG:
+            print("We didn't find a record so we tried to create one")
+
+    if settings.DEBUG:
+        print("We got this entry:", connection)
+        print("user:", connection.user, ":Organization:", connection.organization )
+
+    return connection.user.username + ":" + connection.organization.organization

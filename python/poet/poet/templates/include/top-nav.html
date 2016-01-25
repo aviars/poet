@@ -29,6 +29,7 @@ Just to avoid confusion...
                     <a href="{%  url 'member_list' %}" title="Member Dashboard">
                         <i class="fa fa-cogs"></i> {{ user.get_full_name|default:user.username }}</a>
                 </li>
+
                 <li>
                     <a href="{% url "logout" %}?next=/" title="Logout">
                         {% trans "Logout" %} <i class="fa fa-sign-out"></i>&nbsp;&nbsp;&nbsp;</a>

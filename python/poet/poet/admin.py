@@ -15,8 +15,9 @@ from django import forms
 from django.contrib import admin
 
 from django.conf import settings
+from django.utils import timezone
 
-from .models import PoetMember, EntityCheckLog
+from .models import PoetMember, Connections, EntityCheckLog
 
 class PoetMemberAdmin(admin.ModelAdmin):
     """
@@ -50,6 +51,16 @@ class EntityCheckLogAdmin(admin.ModelAdmin):
     list_display =  ('tx', 'organization', 'reference', 'bundle', 'timestamp', 'user')
 
 
+class ConnectionsAdmin(admin.ModelAdmin):
+    """
+    Admin form for Connections
+    """
+
+    list_display = ('user', 'organization', 'modified')
+
+    readonly_fields = ('created', 'modified')
+
 
 admin.site.register(PoetMember, PoetMemberAdmin)
+admin.site.register(Connections, ConnectionsAdmin)
 admin.site.register(EntityCheckLog, EntityCheckLogAdmin)

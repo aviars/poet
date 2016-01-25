@@ -63,6 +63,33 @@ class PoetMember(models.Model):
 
 
 @python_2_unicode_compatible
+class Connections(models.Model):
+    user            = models.ForeignKey(settings.AUTH_USER_MODEL)
+    organization    = models.ForeignKey(PoetMember)
+    created         = models.DateTimeField(editable=False)
+    modified        = models.DateTimeField()
+
+
+    class Meta:
+        verbose_name = "Licensee Connections"
+        verbose_name_plural = "Licensee Connections"
+
+
+    # Python2 uses __unicode__(self):
+    def __str__(self):
+
+        return str(self.user)+":"+str(self.organization)
+
+
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.modified = timezone.now()
+        return super(Connections, self).save(*args, **kwargs)
+
+
+@python_2_unicode_compatible
 class EntityCheckLog(models.Model):
     reference           = models.CharField(max_length=40,
                                            blank=False,
