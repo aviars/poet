@@ -2,6 +2,15 @@
 
 {% load i18n %}
 {% load url from future %}
+{% block breadcrumbs %}
+       <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url "home" %}">Home</a></li>
+            <li class="active">Members</li>
+        </ul>
+    </div>
+{% endblock %}
+{% block pagename %}POET Members{% endblock %}
 {% block content %}
     <div class="block-center">
         <h3 class="block-center-heading">{% trans "POET Member Organizations" %}</h3>
