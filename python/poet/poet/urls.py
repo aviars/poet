@@ -26,6 +26,8 @@ from .views.member import (MemberList,
                            MemberUpdateView,
                            MemberDeleteView)
 
+from .views.connection import (ConnectionsList, UserList)
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -48,6 +50,17 @@ urlpatterns = patterns('',
                            name='member_update'),
     url(r'^member/(?P<pk>[0-9]+)/delete/$', MemberDeleteView.as_view(),
                            name='member_delete'),
+    # Users
+    url(r'^user/$', UserList.as_view(),
+                           name='users_list'),
+    url(r'^accounts/profile/$', UserList.as_view(),
+                           name='accounts:profile'),
+
+    # Connections
+    url(r'^connection/(?P<pk>[0-9]+)/$', ConnectionsList.as_view(),
+                           name='connection_list'),
+    url(r'^connections/$', ConnectionsList.as_view(),
+                           name='connections_list'),
 
     # API
     url(r'^api/entitycheck/$', EntityCheck,

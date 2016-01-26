@@ -24,8 +24,8 @@ from django.views.generic import (ListView,
                                   DeleteView,
                                   )
 
-
 from ..models import PoetMember
+
 
 class StaffRequiredMixin(object):
     """
