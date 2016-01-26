@@ -9,7 +9,7 @@ Just to avoid confusion...
 {% endcomment %}
         <ul class="nav navbar-nav">
             <li>
-                <a href="{% url 'member_list' %}" contenteditable="false"
+                <a href="{% url 'home' %}" contenteditable="false"
                    class="navbar-brand">
                     <img src="{% static 'img/layout/poet.png' %}"
                      style="vertical-align:middle;display:inline-block;max-height:100%;max-width:100%"
@@ -17,8 +17,12 @@ Just to avoid confusion...
                 </a>
             </li>
             <li>
-                <a class="" href="{% url 'member_list' %}"
+                <a class="" href="{% url 'home' %}"
                    contenteditable="false" title="POET Home"><i class="fa fa-home fa-lg"></i> POET Home</a>
+            </li>
+            <li>
+                <a class="" href="{% url 'member_list' %}"
+                   contenteditable="false" title="Members"><i class="fa fa-users fa-lg"></i> Members</a>
             </li>
             <li>
                 <a class="" href="{% url 'connections_list' %}"
