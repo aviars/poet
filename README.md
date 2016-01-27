@@ -3,12 +3,12 @@ Pre-OAuth Entity Trust API
 
 # Specification
 
-The POET Specification is posted here: https://github.com/ekivemark/poet/POET_specification.md
+The POET Specification is posted here: https://github.com/ekivemark/poet/blob/master/POET_specification.md
 
 The PDF of a presentation given to the DirectTrust Security and Trust Work Group on December 10th, 2015 
-can be found here: https://github.com/ekivemark/poet/POET_Intro.pdf
+can be found here: https://github.com/ekivemark/poet/blob/master/POET_Intro.pdf
 
-A blog post introducing POET (then called a Whitelist Trust API can be found here:
+A blog post introducing POET (then called a Whitelist Trust API) can be found here:
 - "Trusting Health APIs" http://www.hhs.gov/idealab/2015/11/19/trusting-health-apis/
 with a copy on my personal blog here: 
 - http://blog.ekivemark.com/developing-trust-for-health-apis-inc-bluebutton-and-bbonfhir/

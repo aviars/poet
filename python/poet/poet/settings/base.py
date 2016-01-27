@@ -43,7 +43,10 @@ PREREQ_APPS = [
 ]
 
 # Add any third party modules here
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'corsheaders',
+    'oauth2_provider',
+]
 
 # Add your project-specific files here
 PROJECT_APPS = [
@@ -59,10 +62,18 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'oauth2_provider.backends.OAuth2Backend',
+    # Uncomment following if you want to access the admin
+    'django.contrib.auth.backends.ModelBackend'
+)
 
 ROOT_URLCONF = 'poet.urls'
 
@@ -119,3 +130,25 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = "/accounts/login"
+
+# Change to OAuth2_Provider Application Model
+# OAUTH2_PROVIDER_APPLICATION_MODEL='accounts.MyApplication'
+# Override settings in oauth2_provider.settings
+
+#OAUTH2_PROVIDER_APPLICATION_MODEL='appmgmt.BBApplication'
+
+OAUTH2_PROVIDER = {
+    #'APPLICATION_MODEL': 'appmgmt.BBApplication',
+    'READ_SCOPE': 'read',
+    'SCOPES': {"read": "Reading scope", "write": "Writing scope"},
+}
+
+# Configure Django Rest Framework to use OAuth2_Provider Toolkit
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+    )
+}
+

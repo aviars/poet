@@ -17,7 +17,12 @@ import json
 
 from collections import OrderedDict
 from datetime import datetime
+
+from .scope import protected_resource
+#from oauth2_provider.decorators import protected_resource
+
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -30,6 +35,8 @@ from ..utils import (body_decode2json,
                      pull_data)
 
 @csrf_exempt
+@login_required
+@protected_resource(scopes=['read write'])
 def EntityCheck(request):
     """
     EntityCheck will receive a json payload via a POST call
@@ -220,11 +227,6 @@ def create_connection(user, org):
         return ""
 
     member = PoetMember.objects.get(organization=org)
-    print("Member info:", member)
-
-    if settings.DEBUG:
-        print("User:", user, "id:[", user.id,"]")
-        print("Organization:", org, "[", member.id, "]")
 
     # We want a user AND org to test for/create/update
 
@@ -232,23 +234,11 @@ def create_connection(user, org):
         connection = Connections.objects.get(user=user.id, organization=member)
         # Do a save to update the date modified.
         connection.save()
-        if settings.DEBUG:
-            print("We got: ", connection)
     except Connections.DoesNotExist:
-        if settings.DEBUG:
-            print("Failed to find a record - creating")
         connection = Connections()
-        print("Creating...")
+
         connection.user = user
         connection.organization = member
-        print("updated contents")
         connection.save()
-        print("Saved")
-        if settings.DEBUG:
-            print("We didn't find a record so we tried to create one")
-
-    if settings.DEBUG:
-        print("We got this entry:", connection)
-        print("user:", connection.user, ":Organization:", connection.organization )
 
     return connection.user.username + ":" + connection.organization.organization

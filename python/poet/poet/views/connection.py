@@ -45,34 +45,15 @@ class ConnectionsList(ListView):
         return super(ConnectionsList, self).dispatch(*args, **kwargs)
 
 
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ConnectionsList, self).get_context_data(**kwargs)
-    #     self.pk = self.kwargs.get('pk')
-    #     print("Connections Key is ", self.pk)
-    #     print("KWArgs:", self.kwargs)
-    #
-    #     if self.pk != None:
-    #         print("we got a key", self.pk)
-    #         context['connections'] = Connections.objects.get(user=self.pk)
-    #         return context
-    #     if self.request.user.is_staff:
-    #         context['connections'] = Connections.objects.all()
-    #     else:
-    #         context['connections'] = Connections.objects.filter(user=self.request.user.id)
-    #
-    #     return context
-
-
     def get_queryset(self):
         self.pk = self.kwargs.get('pk')
-        print("Connections Key =", self.pk)
+
         if self.pk != None:
             return Connections.objects.filter(pk=self.pk)
         if self.request.user.is_staff:
             return Connections.objects.all()
         else:
             return Connections.objects.filter(user=self.request.user)
-
 
 
 class UserList(ListView):

@@ -104,6 +104,13 @@ STATICFILES_FINDERS = (
 
 STATIC_URL = '/static/'
 
+# CORSHEADERS Configuration
+# Set ALLOW_ALL to True for testing only
+CORS_ORIGIN_ALLOW_ALL = True
+
+# End of CORSHEADERS Section
+
+
 print("=============================================================")
 print("Application: ", APPLICATION_TITLE)
 print("POET Environemnt Settings")

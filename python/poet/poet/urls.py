@@ -73,6 +73,8 @@ urlpatterns = patterns('',
        {'template_name': 'login.html'}, name="login"),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='logout'),
 
+    # OAuth Module
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 
     # Administration Module
     url(r'^_admin/', include(admin.site.urls)),
