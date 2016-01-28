@@ -45,7 +45,8 @@ def body_decode2json(request):
         j =json.loads(request.body.decode('utf-8'), object_pairs_hook=OrderedDict)
         if type(j) !=  type({}):
             kickout_400("The request body did not contain a JSON object i.e. {}.")
-
+        if settings.DEBUG:
+            print("J contains:", j)
         return j
     except:
         return kickout_400("The request body did not contain valid JSON.",)

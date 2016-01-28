@@ -36,7 +36,7 @@ from ..utils import (body_decode2json,
 
 @csrf_exempt
 @login_required
-@protected_resource(scopes=['read write'])
+@protected_resource(scopes=['read'])
 def EntityCheck(request):
     """
     EntityCheck will receive a json payload via a POST call
@@ -67,6 +67,8 @@ def EntityCheck(request):
         # Get the payload
 
         # decode the json from request.body
+        if settings.DEBUG:
+            print("Request:", request)
         j = body_decode2json(request)
         # We received Json in the POST. Now we process it.
 
@@ -81,23 +83,32 @@ def EntityCheck(request):
         success = False
         org = ""
         try:
-            member = PoetMember.objects.get(bundle_reference=bundle_ref,
-                                            owner_email=owner,
-                                            hostname=domain
+            member = PoetMember.objects.get(bundle_reference__iexact=bundle_ref,
+                                            owner_email__iexact=owner,
+                                            hostname__iexact=domain
                                             )
             org = member.organization
             if member.active_account:
                 if member.secret_key == secret:
+                    if settings.DEBUG:
+                        print("matched secret using ", secret)
+                        print("against:", member.secret_key)
                     success = True
                     joined = member.created.isoformat()
                     connection = create_connection(request.user, org)
                 else:
+                    if settings.DEBUG:
+                        print("Failed to match secret using ", secret)
+                        print("Should be:", member.secret_key)
+
                     success = False
             else:
                 success = False
 
 
         except PoetMember.DoesNotExist:
+            if settings.DEBUG:
+                print("POET Member Not found with: ", bundle_ref, owner, domain)
             success = False
             joined = ""
             org = ""
