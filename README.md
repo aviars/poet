@@ -27,7 +27,7 @@ Header
 ------
 
     {
-    "alg": "HS256",
+    "alg": "RS256",
     "typ": "JWT"
     }
 
