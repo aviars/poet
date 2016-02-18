@@ -1,50 +1,87 @@
-# poet
-Pre-OAuth Entity Trust API
+Pre oAuth Entity Trust (POET) (DRAFT - For Discussion Purposes Only)
+====================================================================
 
-# Specification
+In an attempt to assert some level of confidence in 3rd party
+applications, CMS will use a system, known as Pre oAuth Entity Trust , or POET for short, to allow select certifying bodies to identify applications that are deemed to meet some specific criteria established by the certifying body and/or CMS.
 
-The POET Specification is posted here: https://github.com/ekivemark/poet/blob/master/POET_specification.md
+How Does it Work?
+-----------------
 
-The PDF of a presentation given to the DirectTrust Security and Trust Work Group on December 10th, 2015 
-can be found here: https://github.com/ekivemark/poet/blob/master/POET_Intro.pdf
+1. CMS first registers select certifying bodies (CBs). CMS can de-register a CB at any time.
+2. A developer will register his or her application with the CB. Information collected includes many of the same elements used in an oAuth client application registration.  Items include the name, host name, and redirect URLs of the application.  When approved by the CB, these values become memorialized and are embedded into a signed JWT, containing a software statement, that is given to the developer. and re the re  The CB's application registry contains one JSON document per certified application.  
+3. When an application developer is registering an application in CMS's oAuth server, he or she may optionally include the JWT upon application registration.  The certificate badge information will be displayed to the developer upon regitration.
+5. The certification information will be displayed to the end-user at the point of the oAuth client authorization.
+7. While we anticipate all 3rd party applications will contain warnings to the end-user, when one or more valid certifications are present, but the warning language will be lessened. In the green, yellow, red, analogy the warning would become yellow.
 
-A blog post introducing POET (then called a Whitelist Trust API) can be found here:
-- "Trusting Health APIs" http://www.hhs.gov/idealab/2015/11/19/trusting-health-apis/
-with a copy on my personal blog here: 
-- http://blog.ekivemark.com/developing-trust-for-health-apis-inc-bluebutton-and-bbonfhir/
 
-# What is POET
+Example  JWT
+------------
 
-Modern APIs use OAuth 2.0 to securely authorize third party applications to consumer or publish data via APIs. 
-This practice is finally spreading to Federal Healthcare. However, Federal Agencies are charged with protecting
-Beneficiary health information and they take this responsibility extremely seriously. In this situation an important
-issue emerges with OAuth: Who do you trust with the keys to the data. 
+An example JWS (a signed JWT) for using NATE as the CB and Smart Cardiac Risk App as the client 
+application. The JWS is signed with a private certificate bound to the domain `nate-trust.org` 
+using the `RS256 Algorithm`.  The corresponding public certificate shall be hosted at 
+`https://nate-trust.org/.welknown/??`.  Justin can you speak to what should go here?   
 
-While OAuth requires an AUTHENTICATED user to give specific AUTHORIZATION to a third party application there is still
-the question of "Can we trust the third party application as a "Good Actor." This is the issue that POET sets out to
-address. In Healthcare the adoption of secure Messaging using the Direct Protocol has resulted in "Communities of Trust"
-emerging. Within these communities entities have been validated and can securely exchange information as necessary. 
-POET seeks to leverage these Communities of Trust by using a simple API to check with the administrators of these
-communities to determine if a developer organization is known to the community. If the developer organization is known
-then they can be trusted with the ability to create OAuth keys and secrets. 
 
-To be clear, even after passing the POET Validation the developer has no access to data. POET validation is a gate that
-they pass which lets them create OAuth credentials. They then embed those credentials in their application. A beneficiary,
-or data subject, can then choose to connect to the Data Publisher that required the POET Validation. The data subject
-must then explicitly authenticate and authorize the third party application's access to their data. This is the standard
-OAuth process flow. It is only at this point that a third party application has access to that specific individual's 
-information and only to the segments of their data that the data subject explicitly allowed.
+Header
+------
 
-# The bottom line
+    {
+    "alg": "HS256",
+    "typ": "JWT"
+    }
 
-The POET (Pre-Oauth Entity Trust) API provides a mechanism for an organization who publishes a health API to use 
-established Health Communities of Trust to confirm that a third party application development organization is known 
-to the community.
+Payload
+-------
 
-# Recent Changes
+    {
+    "iss": "nate-trust.org",
+    "iat": 1455031265,
+    "exp": 1549639265,
+    "aud": "apps-dstu2.smarthealthit.org",
+    "sub": "jrocket@apps-dstu2.smarthealthit.org",
+    "certification_uid": "9292010131",
+       "contacts" : [
+          "info@smartplatforms.org",
+          "https://gallery.smarthealthit.org"
+       ],
+      "client_name" : "Cardiac Risk App",
+      "client_uri": "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
+       "logo_uri" : "https://gallery.smarthealthit.org/img/apps/66.png",
+       "initiate_login_uri" : "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html",
+       "redirect_uris" : [
+          "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
+       ],
+       "scope" : "openid profile patient/*.read",
+       "token_endpoint_auth_method" : "none",
+       "grant_types" : [ "authorization_code" ]
+        }
 
-- Changed Whitelist API to POET API.
- 
- 
 
+Signature
+---------
+
+    HMACSHA256(
+      base64UrlEncode(header) + "." +
+      base64UrlEncode(payload),
+      
+    ) secret base64 encoded
+
+
+JWT
+---
+
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuYXRlLXRydXN0Lm9yZyIsImlhdCI6MTQ1NTAzMTI2NSwiZXhwIjoxNTQ5NjM5MjY1LCJhdWQiOiJhcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnIiwic3ViIjoianJvY2tldEBhcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnIiwiY2VydGlmaWNhdGlvbl91aWQiOiI5MjkyMDEwMTMxIiwiY29udGFjdHMiOlsiaW5mb0BzbWFydHBsYXRmb3Jtcy5vcmciLCJodHRwczovL2dhbGxlcnkuc21hcnRoZWFsdGhpdC5vcmciXSwiY2xpZW50X25hbWUiOiJDYXJkaWFjIFJpc2sgQXBwIiwiY2xpZW50X3VyaSI6Imh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIiwibG9nb191cmkiOiJodHRwczovL2dhbGxlcnkuc21hcnRoZWFsdGhpdC5vcmcvaW1nL2FwcHMvNjYucG5nIiwiaW5pdGlhdGVfbG9naW5fdXJpIjoiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay9sYXVuY2guaHRtbCIsInJlZGlyZWN0X3VyaXMiOlsiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay8iXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBwYXRpZW50LyoucmVhZCIsInRva2VuX2VuZHBvaW50X2F1dGhfbWV0aG9kIjoibm9uZSIsImdyYW50X3R5cGVzIjpbImF1dGhvcml6YXRpb25fY29kZSJdfQ.0E4c0g4JTz2Fbr9oxp7RdMtJ5LqrVHuYOmvh7D6MHCE
+
+
+  1. The CMS oAuth server checks the JWT to determine if the  `certifiying_body_uid` value of `NATE-039848502-02-5854`, and other contents of the JWT.
+  
+
+Key Responsibilities of a Certifying Body (CB)
+==============================================
+
+
+* To verify application owners own their domains to which they are binding applications (i.e. `whois`).
+* To verify that SSL and valid certificates are in place on the application's server. For example, `https://apps-dstu2.smarthealthit.org` must have a "green light" (e.g. it may not generate common web browser warnings).
+  
 
