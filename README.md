@@ -7,7 +7,7 @@ The purpose of POET is to assert some level of confidence in 3rd-party applicati
 POET was concieved by Mark Schrimshire and the Blue Button on FHIR Team to allow a Medicare beneficiary to distinguish between applications that are verified and unverified. 
 
 
-POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, the _NATE_ and _UPMC_ could endorse the application _ Cardiac Risk App _. In this example, _NATE_ and _UPMC_ are both "Endorsers". An Endorser digitally signs a document, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
+POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, the _NATE_ and _UPMC_ could endorse the application _Cardiac Risk App _. In this example, _NATE_ and _UPMC_ are both "Endorsers". An Endorser digitally signs a document, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
 
 
 How Does it Work?
