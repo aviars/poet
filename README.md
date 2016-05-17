@@ -1,4 +1,4 @@
-Pre OAuth Entity Trust (POET) - DRAFT
+Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
 The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via oAuth2.
