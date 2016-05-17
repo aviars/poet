@@ -56,11 +56,6 @@ Payload
     "scope" : "openid profile patient/*.read",
     "token_endpoint_auth_method" : "none",
     "grant_types" : [ "authorization_code" ]
-    
-    
-    
-    
-    
     }
 
 
