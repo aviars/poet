@@ -90,14 +90,14 @@ List of All Fields in the Payload
  Field names follow RFC 7591, OAuth 2.0 Dynamic Registration. See https://tools.ietf.org/html/rfc7591 for details.
 
 
-    * software_id: A string defined by the application's author.
+    * software_id: A string identifier for the software that comprises a client.
     * iss: A string containing a FQDN. See https://tools.ietf.org/html/rfc7591
     * iat: An integer representing the epoch of the time the JWT was signed.
     * exp: An integer representing the epoch of the time the JWT will expire.
     * client_name: See https://tools.ietf.org/html/rfc7591#section-2.2 
     * client_uri: See https://tools.ietf.org/html/rfc7591#section-2.2
     * logo_uri :  See https://tools.ietf.org/html/rfc7591#section-2.2
-    * initiate_login_uri: "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html"
+    * initiate_login_uri: A string containing a URI pointing to the client's login.
     * redirect_uris: See https://tools.ietf.org/html/rfc7591
     * scope : See https://tools.ietf.org/html/rfc7591
     * token_endpoint_auth_method: A string  enumeration. ["none", "client_secret_post", "client_secret_basic"]
