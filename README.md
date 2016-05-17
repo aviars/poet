@@ -24,10 +24,8 @@ How Does it Work?
 Example  JWT
 ------------
 
-An example JWS (a signed JWT) for using NATE as the EB and Smart Cardiac Risk App as the client 
-application. The JWS is signed with a private certificate bound to the domain `nate-trust.org` 
-using the `RS256 Algorithm`.  The corresponding public certificate shall be hosted at 
-`https://nate-trust.org/.welknown/poet-j.pem`.  
+The  example signed JWT (JWS) contains infromation about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_.
+The JWS is signed with a private key using the `RS256 Algorithm`.  If an x509 certificate was used for signing, then the corresponding public certificate shall be hosted at `https://nate-trust.org/.welknown/poet.pem`.  If an bare key was used, the corresponding public key shall be hosted at `https://nate-trust.org/.welknown/poet.jwks`.  
 
 
 Header
