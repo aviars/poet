@@ -28,16 +28,16 @@ The  example signed JWT (JWS) contains infromation about the _Cardiac Risk App_ 
 The JWS is signed with a private key using the `RS256 Algorithm`.  If an x509 certificate is used for signing, then the corresponding public certificate shall be hosted at `https://nate-trust.org/.welknown/poet.pem`.  If a bare key iss used, the corresponding public key shall be hosted at `https://nate-trust.org/.welknown/poet.jwks`.  
 
 
-Header
-------
+Example Header
+--------------
 
     {
     "alg": "RS256",
     "typ": "JWT"
     }
 
-Payload
--------
+Example Payload
+---------------
 
     {
     "software_id": "4NRB1-0XZABZI9E6-5SM3R",
@@ -57,8 +57,8 @@ Payload
     }
 
 
-Signature
----------
+Example Signature
+-----------------
 
     HMACSHA256(
       base64UrlEncode(header) + "." +
