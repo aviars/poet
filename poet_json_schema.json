@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "type": "object",
+  "properties": {
+    "software_id": {
+      "type": "string"
+    },
+    "iss": {
+        "type": "string"
+    },
+    "iat": {
+      "type": "integer"
+    },
+    "exp": {
+      "type": "integer"
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "logo_uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "initiate_login_uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "redirect_uris": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "scope": {
+      "type": "string"
+    },
+    "token_endpoint_auth_method": {
+      "type": "string",
+      "enum": ["none", "client_secret_post", "client_secret_basic"]
+    },
+    "grant_types": {
+  "type": "array",
+  "items": {
+    "type": "string",
+    "enum": ["authorization_code", "implicit", "password", "client_credentials", "refresh_token"]
+      }
+    }
+  }
+}
