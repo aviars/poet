@@ -4,7 +4,7 @@ Pre-OAuth Entity Trust (POET) - DRAFT
 The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via oAuth2.
 
 
-POET was concieved by Mark Scrimshire and the Blue Button on FHIR Team to allow a Medicare beneficiary to distinguish between applications that are verified and unverified. 
+POET was concieved by the Blue Button API Team at the Centers for Medicare and Medicaid Services (CMS) to assist Medicare beneficiaries to distinguish between applications that are have some endorsement or have no endorsement and could be malicious. 
 
 
 POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, _NATE Trust_ and _UPMC_ could endorse the application _Cardiac Risk App_. In this example, _NATE_ and _UPMC_ are both "Endorsers". An Endorser digitally signs a document, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
@@ -16,7 +16,7 @@ How Does it Work?
 
 1.	A developer registers his or her application with the Endorsing Body (EB). Information collected includes many of the same elements used in an oAuth client application registration.  Items include the name, host name, and redirect URLs of the application.  
 2.	When approved by the EB, these values become memorialized and are embedded into a signed JWT, containing a software statement, that is given to the developer.  The EB's application registry contains one JSON document per certified application.  
-3.	When an application developer is registering an application in the oAuth2 server, he or she may optionally include one or more JWT to the application registration.  The endorsement badge information will be displayed to the developer upon registration.
+3.	An OAuth2 Server (OAuth2 Provider) may obtain a list of JWTs (i.e. a manifest) from a central source such as URL. Optionally, when an application developer is registering an application in the OAuth2 server, he or she may optionally include one or more JWT to the application registration.  The endorsement badge information will be displayed to the developer upon registration.
 4.	The badge and related information will be displayed to the end-user at the point of the oAuth2 client authorization.
 5.	While we anticipate all 3rd party applications will contain warnings to the end-user, when one or more valid badges are present, the warning language will be lessened. In the green, yellow, red, analogy the warning would become yellow.
 
