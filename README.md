@@ -81,7 +81,7 @@ Key Responsibilities of an Endorsing Body (EB)
 * To verify application owners own their domains to which they are binding applications (i.e. `whois`).
 * To verify that SSL and valid certificates are in place on the application's server. For example, `https://apps-dstu2.smarthealthit.org` must have a "green light" (e.g. it may not generate common web browser warnings).
 * To sign certificates with a private  key with the CN bound to the CB's domain.
-* To host the corresponding public key at http(s)://{{iss}}/wellknown/poet.pem or http(s)://{{iss}}/wellknown/poet.jwks
+* To host the corresponding public key at http(s)://{{iss}}/.well-known/poet.pem or http(s)://{{iss}}/.well-known/poet.jwks
 
 
 List of All Fields in the Payload
