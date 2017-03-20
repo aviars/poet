@@ -1,7 +1,7 @@
 Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
-The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via oAuth2.
+The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via OAuth2.
 
 
 POET was concieved by the Blue Button API Team at the Centers for Medicare and Medicaid Services (CMS) to assist Medicare beneficiaries to distinguish between applications that are have some endorsement or have no endorsement and could be malicious. 
