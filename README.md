@@ -95,7 +95,7 @@ List of All Fields in the Payload
     * iss: A string containing a FQDN. See https://tools.ietf.org/html/rfc7591
     * iat: An integer representing the epoch of the time the JWT was signed.
     * exp: An integer representing the epoch of the time the JWT will expire.
-    * client_name: See https://tools.ietf.org/html/rfc7591#section-2.2 
+    * client_name: See https://tools.ietf.org/html/rfc7591#section-2.2
     * client_uri: See https://tools.ietf.org/html/rfc7591#section-2.2
     * logo_uri :  See https://tools.ietf.org/html/rfc7591#section-2.2
     * initiate_login_uri: A string containing a URI pointing to the client's login.
@@ -105,7 +105,7 @@ List of All Fields in the Payload
     * grant_types : A string  enumeration.[ "authorization_code", "implicit", "password", "client_credentials", "refresh_token" ]
 
 
-Communicating POET JWTs in an OAuth 2.0 Dynamic Registration Scenerio
+Communicating POET JWTs in an OAuth 2.0 Dynamic Registration Scenario
 =====================================================================
 
 POET endorsement JWTs are meant to be public information that can be given
