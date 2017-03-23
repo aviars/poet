@@ -117,8 +117,7 @@ one optional, additional field  `poet_jwt_endorsement` that contains an array of
 The format of the JSON document will be a JSON object with one key, `manifest`,
 with an array `[]` key value. Each value in the `manifest` array shall contain additional JSON objects. These additional
 objects shall contain one key that is either the value of `sub` or 
-`software_id`, or `client_uri` for the application.  The value of the key will conform to RFC 7591, OAuth 2.0 Dynamic Registration, with the additional key `poet_jwt_endorsement`.  Below is an example of an application manifest file containing informationn about 3 applications. The first two contain endorsements while the third has none.
-
+`software_id`, or `client_uri` for the application.  The value of the key will conform to RFC 7591, OAuth 2.0 Dynamic Registration, with the additional key `poet_jwt_endorsement`.  Below is an example of an application manifest file containing informationn about 4 applications. The first two contain endorsements while the third has none.  One of the applications described is not an OAuth client but it still contains in the manifest file. The `client_name`, `client_uri`, and the `logo_uri` remain consistent.
 
     {
         "manifest": [{
@@ -141,7 +140,16 @@ objects shall contain one key that is either the value of `sub` or
                     ...
                     "poet_endorsement": ["JWT3", "JWT4"]
                 }
-            }, {
+            }, 
+            {
+                "https://example1.com": {
+                    "client_name": "Not an OAuth application.",
+                    "client_uri": "https://example1.com",
+                    "logo_uri": "https://example1/img/apps/20.png",
+                    "software_id": "some-software-id",
+                }
+            },
+            {
                 "https://example.com": {
                     "client_name": "App with no endorsements",
                     "client_uri": "https://example.com/",
@@ -156,4 +164,4 @@ objects shall contain one key that is either the value of `sub` or
     }
 
 
-`JWT1`, `JWT2`, `JWT3`, `JWT4` would be replaced with actual valid JWT strings. See the Example JWT above. `...` indicates any field allowed by RFC 7591.
+`JWT1`, `JWT2`, `JWT3`, `JWT4` would be replaced with actual valid JWT strings. See the Example JWT above. `...` indicates any additional fields. When using this format in conext of OAuth2 include the fields defined by RFC 7591.
