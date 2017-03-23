@@ -103,20 +103,24 @@ List of All Fields in the Payload
     * grant_types : A string  enumeration.[ "authorization_code", "implicit", "password", "client_credentials", "refresh_token" ]
 
 
-Communicating POET JWTs in an OAuth 2.0 Dynamic Registration Scenario
-=====================================================================
+Communicating POET JWTs in an Application Registry
+==================================================
 
 POET endorsement JWTs are meant to be public information that can be given
 to application developers and discovered by OAuth2 providers. To promote 
 dynamic registration of applications and to avoid the situation where each developer must carry the JWT and register it with each and every OAuth2 Provider, a URL pointing to a JSON document containing a manifest of
 one or more  an OAuth2 client application.  OAuth2 Providers may obtain 
 URLs from trusted parties or from developers.  The format of the JSON document 
-is based on, RFC 7591, OAuth 2.0 Dynamic Registration. This profile defines 
-one optional, additional field  `poet_jwt_endorsement` that contains an array of POET JWT endorsements.
+is based on field names defined in RFC 7591, OAuth 2.0 Dynamic Registration.
+`client_name`, `client_uri` are required even in a non-OAuth context.
+
+
+This profile defines one optional, additional field  `poet_jwt_endorsement` that contains an array of POET JWT endorsements.
+
 
 The format of the JSON document will be a JSON object with one key, `manifest`,
-with an array `[]` key value. Each value in the `manifest` array shall contain additional JSON objects. These additional
-objects shall contain one key that is either the value of `sub` or 
+with an array `[]` key value. Each value in the `manifest` array shall contain additional JSON objects. 
+These additional objects shall contain one key that is either the value of `sub` or 
 `software_id`, or `client_uri` for the application.  The value of the key will conform to RFC 7591, OAuth 2.0 Dynamic Registration, with the additional key `poet_jwt_endorsement`.  Below is an example of an application manifest file containing informationn about 4 applications. The first two contain endorsements while the third has none.  One of the applications described is not an OAuth client but it still contains in the manifest file. The `client_name`, `client_uri`, and the `logo_uri` remain consistent.
 
     {
