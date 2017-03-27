@@ -103,69 +103,20 @@ List of All Fields in the Payload
     * grant_types : A string  enumeration.[ "authorization_code", "implicit", "password", "client_credentials", "refresh_token" ]
 
 
-Communicating POET JWTs in an Application Registry
-==================================================
-
-POET endorsement JWTs are meant to be public information that can be given
-to application developers and discovered by OAuth2 providers. To promote 
-dynamic registration of applications and to avoid the situation where each developer must carry the JWT and register it with each and every OAuth2 Provider, a URL pointing to a JSON document containing a manifest of
-one or more  an OAuth2 client application.  OAuth2 Providers may obtain 
-URLs from trusted parties or from developers.  The format of the JSON document 
-is based on field names defined in RFC 7591, OAuth 2.0 Dynamic Registration.
-`client_name`, `client_uri` are required even in a non-OAuth context.
+Communicating POET JWTs with OAuth 2.0 Dynamic Registration
+===========================================================
 
 
-This profile defines one optional, additional field  `poet_jwt_endorsement` that contains an array of POET JWT endorsements.
+The POET profile defines one optional, additional field for RFC 7591, OAuth 2.0 Dynamic Registration:  `poet_jwt_endorsement` contains an array of POET JWT endorsements.
 
 
-The format of the JSON document will be a JSON object with one key, `manifest`,
-with an array `[]` key value. Each value in the `manifest` array shall contain additional JSON objects. 
-These additional objects shall contain one key that is either the value of `sub` or 
-`software_id`, or `client_uri` for the application.  The value of the key will conform to RFC 7591, OAuth 2.0 Dynamic Registration, with the additional key `poet_jwt_endorsement`.  Below is an example of an application manifest file containing informationn about 4 applications. The first two contain endorsements while the third has none.  One of the applications described is not an OAuth client but it still contains in the manifest file. The `client_name`, `client_uri`, and the `logo_uri` remain consistent.
-
-    {
-        "manifest": [{
-                "https://apps-dstu2.smarthealthit.org/cardiac-risk": {
                     "client_name": "Cardiac Risk App",
                     "client_uri": "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
                     "logo_uri": "https://gallery.smarthealthit.org/img/apps/66.png",
                     "software_id": "cadiac-risk-app",
                     "redirect_uri": ["https://apps-dstu2.smarthealthit.org/cardiac-risk/redirect"],
                     ...
-                    "poet_endorsement": ["JWT1", "JWT2"]
-                }
-            }, {
-                "https://apps-dstu2.smarthealthit.org/bp-centiles": {
-                    "client_name": "Blood Pressure App",
-                    "client_uri": "https://apps-dstu2.smarthealthit.org/bp-centiles",
-                    "logo_uri": "https://gallery.smarthealthit.org/img/apps/20.png",
-                    "software_id": "blood-pressure-app",
-                    "redirect_uri": ["https://apps-dstu2.smarthealthit.org/bp-centiles/redirect"],
-                    ...
-                    "poet_endorsement": ["JWT3", "JWT4"]
-                }
-            }, 
-            {
-                "https://example1.com": {
-                    "client_name": "Not an OAuth application.",
-                    "client_uri": "https://example1.com",
-                    "logo_uri": "https://example1/img/apps/20.png",
-                    "software_id": "some-software-id",
-                }
-            },
-            {
-                "https://example.com": {
-                    "client_name": "App with no endorsements",
-                    "client_uri": "https://example.com/",
-                    "logo_uri": "https://example.com/img.png",
-                    "software_id": "123456789",
-                    "redirect_uri": ["https://example.com/redirect"]
-                    ...
-                }
-            }
-
-        ]
-    }
+                    "poet_jwt_endorsement": ["JWT1", "JWT2"]
 
 
-`JWT1`, `JWT2`, `JWT3`, `JWT4` would be replaced with actual valid JWT strings. See the Example JWT above. `...` indicates any additional fields. When using this format in conext of OAuth2 include the fields defined by RFC 7591.
+`JWT1`, `JWT2`, are replaced with actual valid JWT strings. See the Example JWT above.
