@@ -1,32 +1,51 @@
 Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
-The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via OAuth2.
+POET was conceived by the Blue Button API Team at the Centers for Medicare and Medicaid Services (CMS) to help Medicare beneficiaries distinguish between applications that have some sort of endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
 
-The purpose of POET is to assert some level of confidence in 3rd-party applications accessed via OAuth2 using a <a href="https://jwt.io">JWT</a> signed with a private key.
+POET uses a <a href="https://jwt.io">JWT</a> ,signed with an Endorsing Body's private key. POET field definitions for its payload are use  <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a> and 
+<a href="https://tools.ietf.org/html/rfc7591">RFC 7591</a>. Other field definitions are defined in this document. POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit.
 
-POET was concieved by the Blue Button API Team at the Centers for Medicare and Medicaid Services (CMS) to help Medicare beneficiaries distinguish between applications that have some dsort of endorsement versus applications that have no know pedigree and and could be malicious.
+The information in the POET endorsement JWT is to be displayed by an OAuth2 Provider in the Authorization flow (when a user approves an application to access his or her own information).  The intended use is for the information to be displayed to end users **prior** to authorizing an application.  OAuth Providers may display a warning message when no endorsement JWTs are present for a given application (e.g. an OAuth2 client). 
 
-The information in the POET Endorsement JWT can be displayed by an OAuth2 Provider in the Authorization flow (when a user approves an applicaition to access his or her own information).  The intended use is for the information to be displayed to end users **prior** to authorizing an application.  OAuth Providers may display a warning message when no endorsements JWTs are present for a given application (i.e. an OAuth2 client).
-
-POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, _NATE Trust_ and _UPMC_ could endorse the application _Cardiac Risk App_. In this example, _NATE_ and _UPMC_ are both "Endorsers". An Endorser digitally signs a special file, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
-
-
-How Does it Work?
------------------
+POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, _NATE Trust_ and _UPMC_ could endorse the application _Cardiac Risk App_. In this example, _NATE_ and _UPMC_ are both "Endorsing Bodies (EB)”. An EB digitally signs a special file, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
 
 
-1.	A developer registers his or her application with the Endorsing Body (EB). Information collected includes many of the same elements used in an oAuth client application registration.  Items include the name, host name, and redirect URLs of the application.
-2.	When approved by the EB, these values become memorialized and are embedded into a signed JWT, containing a software statement, that is given to the developer.  The EB's application registry contains one JSON document per certified application.
-3.	An OAuth2 Server (OAuth2 Provider) may obtain a list of JWTs (i.e. a manifest) from a central source such as URL. Optionally, when an application developer is registering an application in the OAuth2 server, he or she may optionally include one or more JWT to the application registration as a POET Endorsement JWT.  The endorsement badge information will be displayed to the developer upon registration.
-4.	The badge and related information will be displayed to the end-user at the point of the oAuth2 client authorization.
-5.	While we anticipate all 3rd party applications will contain warnings to the end-user, when one or more valid badges are present, the warning language will be lessened. In the green, yellow, red, analogy the warning would become yellow.
+How Does POET Work for Endorsing Bodies (EBs)?
+----------------------------------------------
+
+1.	A developer provides the Endorsing Body (EB) with information about the application. 
+2.	This information includes many of the same elements used in an OAuth client application registration. Most notably the `client_name`, `logo_uri`, are `redirect_uris` are defined.
+3.	When approved by the EB, these values become memorialized within the payload of a signed JWT,
+4.	The JWT is given to the developer.
+5.	The EB may also publish a list of all the applications it endorses.
+6.	EBs must sign the JWT with a private key.
+7.	EBs must publish the corresponding public key at `example.com/.well-known/poet.jwks` or `/.well-known/poet.pem`.
 
 
-Example  JWT
-------------
+How Does POET Work for Developers?
+----------------------------------
+1. A developer registers his or her application with the Endorsing Body (EB).
+2. When approved by the EB, the EB creates a JWT signed by the EB and provides it to you.
+3. Share your endorsement: Register the JWT your with your data providers and/or application registries.
 
-The  example signed JWT (JWS) contains infromation about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_.
+How Does POET Work for Data Providers?
+--------------------------------------
+
+2.	1.	A Data Provider is typically both an Auth Server and a Resource Sever. Applications are registered here by developers.
+2. An endorsement matching registered applications may be added by supplying the JWT.
+3. The JWT may be provided directly by the developer.
+4. The JWT may be obtained and associated with registered applications by other means such as a manifest file or API.
+5. Data Providers use the presence (and absence) of endorsements to display appropriate information to the end-user. For example is the signature valid, is it un
+6. Endorsements should be displayed to the end-user during the authorization/approval process.
+7. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `redirect_uri` in th JWT matches the uri registered with the OAuth2 provider.
+8. JWT verification in JavaScript browser-based applications is discouraged as it could pose a security risk.
+
+
+Example POET JWT
+----------------
+
+The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_.
 The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key, whether an X509 certificate or a JWKS, shall be stored at the stored at the URI found in the `poet_public_key_uri` in the payload. Clients can discover the POET public key URI from the `iss` field.  Check  `[iss]/.well-known/poet.jwks` and if that is not found, check the `[iss]/.well-known/poet.pem`.
 
 
@@ -88,8 +107,7 @@ Key Responsibilities of an Endorsing Body (EB)
 List of All Fields in the Payload
 =================================
 
- Field names follow RFC 7591, OAuth 2.0 Dynamic Registration. See https://tools.ietf.org/html/rfc7591 for details.
-
+ Field names follow RFC  <a href="https://tools.ietf.org/html/rfc7519">7519</a> and RFC <a href="https://tools.ietf.org/html/rfc7591">7591</a>.
 
     * software_id: A string identifier for the software that comprises a client.
     * iss: A string containing a FQDN. See https://tools.ietf.org/html/rfc7591
@@ -122,3 +140,4 @@ The POET profile defines one optional, additional field for RFC 7591, OAuth 2.0 
 
 
 `JWT1`, `JWT2`, are replaced with actual valid JWT strings. See the Example JWT above.
+
