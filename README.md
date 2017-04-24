@@ -73,7 +73,7 @@ Example Payload
           "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
        ],
     "scope" : "openid profile patient/*.read",
-    "token_endpoint_auth_method" : "none",
+    "token_endpoint_auth_method" : "client_secret_basic",
     "grant_types" : [ "authorization_code" ]
     }
 
