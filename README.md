@@ -107,8 +107,7 @@ Key Responsibilities of an Endorsing Body (EB)
 Payload Fields
 ==============
 
- Field names follow RFC  <a href="https://tools.ietf.org/html/rfc7519">7519</a> and RFC <a href="https://tools.ietf.org/html/rfc7591">7591</a>.  Some fields are optional and some must be 
- left blank when creating an endorsement JWT that is not using OAuth2.
+ Field names follow RFC  <a href="https://tools.ietf.org/html/rfc7519">7519</a> and RFC <a href="https://tools.ietf.org/html/rfc7591">7591</a>.  Some fields are optional while in other cases, the key is required, but the value can be blank (e.g. `""`, `[]`).
 
 | Field   |     Description   |  Required | Possible Values | Cardinatlity |
 |----------|-------------|------|------|------|
@@ -119,10 +118,13 @@ Payload Fields
 | `software_id`| Software ID: A string identifier for the software that comprises a client.|N|String|1..1
 |`client_uri`|Client URI: See https://tools.ietf.org/html/rfc7591#section-2|N|String|1..1
 |`logo_uri`|Logo URI: See https://tools.ietf.org/html/rfc7591#section-2.2|N|String|1..1
-|`redirect_uris`|OAuth2 Redirect URIs: See See https://tools.ietf.org/html/rfc7591|Y|Array of Strings containing URIs. At least 1 is required for OAuth2 applications.|0..N
+|`redirect_uris`|OAuth2 Redirect URIs: See See https://tools.ietf.org/html/rfc7591|Y|Array of Strings containing URIs. At least 1 value is required for an OAuth2 application.|0..N
 |`scope`|OAuth2 Scopes: See See https://tools.ietf.org/html/rfc7591|Y|String with whitespace as seperator. Blank allowed.|1..1
-|`token_endpoint_auth_method`|Token Endpoint Auth Method: see https://tools.ietf.org/html/rfc7591#section-2|Y|String. Possible values are: [`none`, `client_secret_post`, `client_secret_basic`]|1..1
-|`grant_types`|Grant Types: See https://tools.ietf.org/html/rfc7591#section-2|Y|Array of Strings. Possible values are:[ `authorization_code`, `implicit`, `password`, `client_credentials`, `refresh_token`] |0..N
+|`token_endpoint_auth_method`|Token Endpoint Auth Method: see https://tools.ietf.org/html/rfc7591#section-2 At least 1 value is required for an OAuth2 application.|Y|String. Possible values are: [`none`, `client_secret_post`, `client_secret_basic`]|1..1
+|`grant_types`|Grant Types: See https://tools.ietf.org/html/rfc7591#section-2|Y|Array of Strings. Possible values are:[ `authorization_code`, `implicit`, `password`, `client_credentials`, `refresh_token`].|0..N
+
+
+
 
 Special Instructions for Payload Fields in Non-OAuth2 Applications
 ------------------------------------------------------------------
