@@ -73,7 +73,7 @@ Example Payload
           "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
        ],
     "scope" : "openid profile patient/*.read",
-    "token_endpoint_auth_method" : "none",
+    "token_endpoint_auth_method" : "client_secret_basic",
     "grant_types" : [ "authorization_code" ]
     }
 
@@ -104,23 +104,39 @@ Key Responsibilities of an Endorsing Body (EB)
 * To host the corresponding public key at http(s)://{{iss}}/.well-known/poet.pem or http(s)://{{iss}}/.well-known/poet.jwks
 
 
-List of All Fields in the Payload
-=================================
+Payload Fields
+==============
 
- Field names follow RFC  <a href="https://tools.ietf.org/html/rfc7519">7519</a> and RFC <a href="https://tools.ietf.org/html/rfc7591">7591</a>.
+ Field names follow RFC  <a href="https://tools.ietf.org/html/rfc7519">7519</a> and RFC <a href="https://tools.ietf.org/html/rfc7591">7591</a>.  Some fields are optional while in other cases, the key is required, but the value can be blank (e.g. `""`, `[]`).
 
-    * software_id: A string identifier for the software that comprises a client.
-    * iss: A string containing a FQDN. See https://tools.ietf.org/html/rfc7591
-    * iat: An integer representing the epoch of the time the JWT was signed.
-    * exp: An integer representing the epoch of the time the JWT will expire.
-    * client_name: See https://tools.ietf.org/html/rfc7591#section-2.2
-    * client_uri: See https://tools.ietf.org/html/rfc7591#section-2.2
-    * logo_uri :  See https://tools.ietf.org/html/rfc7591#section-2.2
-    * initiate_login_uri: A string containing a URI pointing to the client's login.
-    * redirect_uris: See https://tools.ietf.org/html/rfc7591
-    * scope : See https://tools.ietf.org/html/rfc7591
-    * token_endpoint_auth_method: A string  enumeration. ["none", "client_secret_post", "client_secret_basic"]
-    * grant_types : A string  enumeration.[ "authorization_code", "implicit", "password", "client_credentials", "refresh_token" ]
+| Field   |     Description   |  Required | Possible Values | Cardinatlity |
+|----------|-------------|------|------|------|
+| `client_name` |  Name of the client app. See https://tools.ietf.org/html/rfc7591#section-2 | Y | String | 1..1
+| `iss` | Issuer: See https://tools.ietf.org/html/rfc7519#section-4.1.1|Y| String of a FQDN | 1..1
+| `iat` | Issued At: See https://tools.ietf.org/html/rfc7519#section-4.1.6| Y|Integer|1..1
+| `exp` | Expiration Time: https://tools.ietf.org/html/rfc7519#section-4.1.4 |Y|Integer|1..1
+| `software_id`| Software ID: A string identifier for the software that comprises a client.|N|String|1..1
+|`client_uri`|Client URI: See https://tools.ietf.org/html/rfc7591#section-2|N|String|1..1
+|`logo_uri`|Logo URI: See https://tools.ietf.org/html/rfc7591#section-2.2|N|String|1..1
+|`redirect_uris`|OAuth2 Redirect URIs: See See https://tools.ietf.org/html/rfc7591|Y|Array of Strings containing URIs. At least 1 value is required for an OAuth2 application.|0..N
+|`scope`|OAuth2 Scopes: See See https://tools.ietf.org/html/rfc7591|Y|String with whitespace as seperator. Blank allowed.|1..1
+|`token_endpoint_auth_method`|Token Endpoint Auth Method: see https://tools.ietf.org/html/rfc7591#section-2 At least 1 value is required for an OAuth2 application.|Y|String. Possible values are: [`none`, `client_secret_post`, `client_secret_basic`]|1..1
+|`grant_types`|Grant Types: See https://tools.ietf.org/html/rfc7591#section-2|Y|Array of Strings. Possible values are:[ `authorization_code`, `implicit`, `password`, `client_credentials`, `refresh_token`].|0..N
+
+
+
+
+Special Instructions for Payload Fields in Non-OAuth2 Applications
+------------------------------------------------------------------
+
+When using POET for non-OAuth2 applications, certain keys should still be present, but set to `""` or an empty list `[]`.  The following table outlines the approprite values by field:
+
+| Field   |     Value   |
+|---------|-------------|
+|`redirect_uris`|`[]`|
+|`scopes`|`""`|
+|`token_endpoint_auth_method`|`"none"`|
+|`grant_types`|`[]`|
 
 
 Communicating POET JWTs with OAuth 2.0 Dynamic Registration
