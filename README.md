@@ -1,7 +1,7 @@
 Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
-POET was conceived as a means to represent 3rd part application edorsement.  Its goal is to help consumers distinguish between applications that have some sort of endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
+POET was conceived as a means to represent 3rd party application edorsement for health care applications.  Its goal is to help consumers distinguish between applications that have some sort of endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
 
 POET uses a <a href="https://jwt.io">JWT</a> ,signed with an Endorsing Body's private key. POET field definitions for its payload are use  <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a> and 
 <a href="https://tools.ietf.org/html/rfc7591">RFC 7591</a>. Other field definitions are defined in this document. POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit.
