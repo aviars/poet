@@ -1,7 +1,7 @@
 Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
-POET was conceived as a means to represent 3rd party application edorsement for health care applications.  Its goal is to help consumers distinguish between applications that have some sort of endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
+POET was conceived as a means to represent third-party application endorsement for health care applications. POET’s goal is to help consumers distinguish between applications that have an endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
 
 POET uses a <a href="https://jwt.io">JWT</a>, signed with an Endorsing Body's (EB's) private key. The EB's signature can be verified using the EB's public key.
 
