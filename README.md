@@ -6,8 +6,12 @@ POET was conceived as a means to represent 3rd party application edorsement for 
 POET uses a <a href="https://jwt.io">JWT</a>, signed with an Endorsing Body's (EB's) private key. The EB's signature can be verified using the EB's public key.
 
 
-POET payload field definitions are based on <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>  <a href="https://tools.ietf.org/html/rfc7517">RFC 7517 (JWT)</a>, and 
+POET payload field definitions are based on <a href="https://tools.ietf.org/html/rfc7519">RFC 7519 (JWT)</a> and
+ 
 <a href="https://tools.ietf.org/html/rfc7591">RFC 7591 (OAuth2 Dynamic Client Registraion</a>. Although designed to facilitate trust in OAuth2 clients,  POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit so long as the minimum required fields are kept.
+
+POET's public key format is <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a>.
+
 
 The information in the POET endorsement JWT is to be displayed by an OAuth2 Provider in the Authorization flow (when a user approves an application to access his or her own information).  The intended use is for the information to be displayed to end users **prior** to authorizing an application.  OAuth Providers may display a warning message when no endorsement JWTs are present for a given application (e.g. an OAuth2 client). 
 
