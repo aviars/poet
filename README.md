@@ -11,7 +11,7 @@ POET payload field definitions are based on <a href="https://tools.ietf.org/html
 
 The information in the POET endorsement JWT is to be displayed by an OAuth2 Provider in the Authorization flow (when a user approves an application to access his or her own information).  The intended use is for the information to be displayed to end users **prior** to authorizing an application.  OAuth Providers may display a warning message when no endorsement JWTs are present for a given application (e.g. an OAuth2 client). 
 
-POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, _NATE Trust_ and _UPMC_ could endorse the application _Cardiac Risk App_. In this example, _NATE_ and _UPMC_ are both "Endorsing Bodies (EB)”. An EB digitally signs a special file, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
+POET provides a technical means for another party to _vouch for_ or _endorse_ an OAuth2 application. For example, the organizations, _Transparent Health_ and _UPMC_ could endorse the application _Cardiac Risk App_. In this example, _Transparent Health_ and _UPMC_ are both "Endorsing Bodies (EB)”. An EB digitally signs a special file, called a _JWT_, that contains information about the OAuth2 application.  Information contained within the JWT includes the application's redirect URIs and other basic information.  This JWT payload is further described below.
 
 
 How Does POET Work for Endorsing Bodies (EBs)?
@@ -37,19 +37,20 @@ How Does POET Work for Developers?
 How Does POET Work for Data Providers?
 --------------------------------------
 
-2.	1.	A Data Provider is typically both an Auth Server and a Resource Sever. Applications are registered here by developers.
-2. An endorsement matching registered applications may be added by supplying the JWT.
-3. The JWT may be provided directly by the developer.
-4. The JWT may be obtained and associated with registered applications by other means such as a manifest file or API.
-5. Data Providers use the presence (and absence) of endorsements to display appropriate information to the end-user. For example is the signature valid, is it un
-6. Endorsements should be displayed to the end-user during the authorization/approval process.
-7. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `software_id` in th JWT matches the uri registered with the OAuth2 provider.
+1. Data Providers may choose to honor only signed JWTs from issuers (`iss`) they trust.
+2. A Data Provider is typically both an Auth Server and a Resource Sever. Applications are registered here by developers.
+3. An endorsement matching registered applications may be added by supplying the JWT.
+4. The JWT may be provided directly by the developer.
+5. The JWT may be obtained and associated with registered applications by other means such as a manifest file or API.
+6. Data Providers use the presence (and absence) of endorsements to display appropriate information to the end-user. For example is the signature valid, is it un
+7. Endorsements should be displayed to the end-user during the authorization/approval process.
+8. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `software_id` in th JWT matches the uri registered with the OAuth2 provider.
 
 
 Example POET JWT
 ----------------
 
-The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_. The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key shall be a < a href="https://tools.ietf.org/html/rfc7517">JWK</a> stored at the stored `https://[iss]/.well-known/poet.jwk`.
+The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _transparenthealth.org.org_. The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key shall be a < a href="https://tools.ietf.org/html/rfc7517">JWK</a> stored at the stored `https://[iss]/.well-known/poet.jwk`.
 
 
 Example Header
@@ -65,7 +66,7 @@ Example Payload
 
     {
     "software_id": "4NRB1-0XZABZI9E6-5SM3R",
-    "iss": "nate-trust.org",
+    "iss": "transparenthealth.org",
     "iat": 1455031265,
     "exp": 1549639265,
     "client_name" : "Cardiac Risk App",
@@ -79,15 +80,6 @@ Example Payload
     "token_endpoint_auth_method" : "client_secret_basic",
     "grant_types" : [ "authorization_code" ]
     }
-
-
-Example Signature
------------------
-
-    HMACSHA256(
-      base64UrlEncode(header) + "." +
-      base64UrlEncode(payload),
-    ) secret base64 encoded
 
 
 Example JWT
