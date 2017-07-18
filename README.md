@@ -20,10 +20,10 @@ How Does POET Work for Endorsing Bodies (EBs)?
 ----------------------------------------------
 
 1. An Endorsing Body is identified as the Issuer `iss` in the JWT's payload. 
-2. The `issuer` shall be a fully qulified domain name (FQDN) as it is used to locate the EB's public key on the Internet.
+2. The Issuer `iss` shall be a fully qulified domain name (FQDN). It's used to locate the EB's public key on the Internet.
 1.	A developer provides the Endorsing Body (EB) with information about the application. 
 2.	This information includes many of the same elements used in an OAuth client application registration. Most notably the `client_name`, `logo_uri`, are `redirect_uris` are defined.
-3.	When approved by the EB, these values become memorialized within the payload of a signed JWT,
+3.	When approved by the EB, these values become memorialized within the payload of a signed JWT.
 4.	The JWT is given to the developer.
 5.	The EB may also publish a list of all the applications it endorses.
 6.	EBs must sign the JWT with its own private key.
@@ -49,10 +49,17 @@ How Does POET Work for Data Providers?
 8. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `software_id` in th JWT matches the uri registered with the OAuth2 provider.
 
 
-Example POET JWT
-----------------
+Example POET
+============
+
+Example JWT
+----------
 
 The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _transparenthealth.org.org_. The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key shall be a < a href="https://tools.ietf.org/html/rfc7517">JWK</a> stored at the stored `https://[iss]/.well-known/poet.jwk`.
+
+    eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6InRyYW5zcGFyZW50aGVhbHRoLm9yZyJ9.eyJpbml0aWF0ZV9sb2dpbl91cmkiOiJodHRwczovL2FwcHMtZHN0dTIuc21hcnRoZWFsdGhpdC5vcmcvY2FyZGlhYy1yaXNrL2xhdW5jaC5odG1sIiwiZXhwIjoxNTYzNDcxMDE5LCJyZWRpcmVjdF91cmlzIjpbImh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIl0sInRva2VuX2VuZHBvaW50X2F1dGhfbWV0aG9kIjoiY2xpZW50X3NlY3JldF9iYXNpYyIsImlhdCI6MTUwMDM5OTAxOSwiY2xpZW50X25hbWUiOiJDYXJkaWFjIFJpc2sgQXBwIiwiY2xpZW50X3VyaSI6Imh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBwYXRpZW50LyoucmVhZCIsImxvZ29fdXJpIjoiaHR0cHM6Ly9nYWxsZXJ5LnNtYXJ0aGVhbHRoaXQub3JnL2ltZy9hcHBzLzY2LnBuZyIsInNvZnR3YXJlX2lkIjoiNE5SQjEtMFhaQUJaSTlFNi01U00zUiIsImdyYW50X3R5cGVzIjpbImF1dGhvcml6YXRpb25fY29kZSJdLCJpc3MiOiJ0cmFuc3BhcmVudGhlYWx0aC5vcmcifQ.EtP7PIGRgoeGEplY5ZS63G52GwI57JSYcJP3TZ1jg00FhMCl2mjzo4a_5bcUXu9sNOPd5aWesQOIfKzPpEJuvmWg9Njgs_CLzl6NJR2xvwIAM4w330Pryeu-4jLy-2uPsghiMh6HiSnGR_W09juO3950b3H0D4DYyO46kVy7c34vSQ4Mf4Z_uZtu9ctrvUXb6HWMMn5oH1UsXkXWhLVB6AEpzlSMTcqkYVoRq0PZQB2viRvghLwC9YGYOxRlIAAZE3yCMSaNcBCnxf_uwfp1sC-8e_jqF3DgMBcL6bu9ZEYG-DGvD_8ERtryEzRz-lXITgK43vphhRoYxbPrikjqQg
+
+
 
 
 Example Header
@@ -60,34 +67,31 @@ Example Header
 
     {
     "alg": "RS256",
-    "typ": "JWT"
+    "typ": "JWT",
+    "kid": "transpafrenthealth.org"
     }
 
 Example Payload
 ---------------
 
     {
-    "software_id": "4NRB1-0XZABZI9E6-5SM3R",
-    "iss": "transparenthealth.org",
-    "iat": 1455031265,
-    "exp": 1549639265,
-    "client_name" : "Cardiac Risk App",
-    "client_uri": "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
-    "logo_uri" : "https://gallery.smarthealthit.org/img/apps/66.png",
-    "initiate_login_uri" : "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html",
-    "redirect_uris" : [
-          "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
-       ],
-    "scope" : "openid profile patient/*.read",
-    "token_endpoint_auth_method" : "client_secret_basic",
-    "grant_types" : [ "authorization_code" ]
+    initiate_login_uri: "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html",
+    exp: 1563471019,
+    redirect_uris: [
+         "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
+        ],
+    token_endpoint_auth_method: "client_secret_basic",
+    iat: 1500399019,
+    client_name: "Cardiac Risk App",
+    client_uri: "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
+    scope: "openid profile patient/*.read",
+    logo_uri: "https://gallery.smarthealthit.org/img/apps/66.png",
+    software_id: "4NRB1-0XZABZI9E6-5SM3R",
+    grant_types: [
+       "authorization_code"
+    ],
+    iss: "transparenthealth.org"
     }
-
-
-Example JWT
------------
-
-    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuYXRlLXRydXN0Lm9yZyIsImlhdCI6MTQ1NTAzMTI2NSwiZXhwIjoxNTQ5NjM5MjY1LCJhdWQiOiJhcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnIiwic3ViIjoianJvY2tldEBhcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnIiwiY2VydGlmaWNhdGlvbl91aWQiOiI5MjkyMDEwMTMxIiwiY29udGFjdHMiOlsiaW5mb0BzbWFydHBsYXRmb3Jtcy5vcmciLCJodHRwczovL2dhbGxlcnkuc21hcnRoZWFsdGhpdC5vcmciXSwiY2xpZW50X25hbWUiOiJDYXJkaWFjIFJpc2sgQXBwIiwiY2xpZW50X3VyaSI6Imh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIiwibG9nb191cmkiOiJodHRwczovL2dhbGxlcnkuc21hcnRoZWFsdGhpdC5vcmcvaW1nL2FwcHMvNjYucG5nIiwiaW5pdGlhdGVfbG9naW5fdXJpIjoiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay9sYXVuY2guaHRtbCIsInJlZGlyZWN0X3VyaXMiOlsiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay8iXSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBwYXRpZW50LyoucmVhZCIsInRva2VuX2VuZHBvaW50X2F1dGhfbWV0aG9kIjoibm9uZSIsImdyYW50X3R5cGVzIjpbImF1dGhvcml6YXRpb25fY29kZSJdfQ.0E4c0g4JTz2Fbr9oxp7RdMtJ5LqrVHuYOmvh7D6MHCE
 
 
 
