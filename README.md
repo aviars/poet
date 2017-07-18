@@ -3,8 +3,8 @@ Pre-OAuth Entity Trust (POET) - DRAFT
 
 POET was conceived as a means to represent 3rd party application edorsement for health care applications.  Its goal is to help consumers distinguish between applications that have some sort of endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
 
-POET uses a <a href="https://jwt.io">JWT</a> ,signed with an Endorsing Body's private key. POET field definitions for its payload are use  <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a> and 
-<a href="https://tools.ietf.org/html/rfc7591">RFC 7591</a>. Other field definitions are defined in this document. POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit.
+POET uses a <a href="https://jwt.io">JWT</a> ,signed with an Endorsing Body's private key. POET field definitions for its payload are use  <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>  < a href="https://tools.ietf.org/html/rfc7517">RFC 7517</> and 
+<a href="https://tools.ietf.org/html/rfc7591">RFC 7591</a>. Although designed to facilitate trust in cliients within OAuth2,  POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit so long as required fields are met.
 
 The information in the POET endorsement JWT is to be displayed by an OAuth2 Provider in the Authorization flow (when a user approves an application to access his or her own information).  The intended use is for the information to be displayed to end users **prior** to authorizing an application.  OAuth Providers may display a warning message when no endorsement JWTs are present for a given application (e.g. an OAuth2 client). 
 
@@ -14,13 +14,15 @@ POET provides a technical means for another party to _vouch for_ or _endorse_ an
 How Does POET Work for Endorsing Bodies (EBs)?
 ----------------------------------------------
 
+1. An Endorsing Body is identified as the Issuer `iss` in the JWT's payload. 
+2. The `issuer` shall be a fully qulified domain name (FQDN) as it is used to locate the EB's public key on the Internet.
 1.	A developer provides the Endorsing Body (EB) with information about the application. 
 2.	This information includes many of the same elements used in an OAuth client application registration. Most notably the `client_name`, `logo_uri`, are `redirect_uris` are defined.
 3.	When approved by the EB, these values become memorialized within the payload of a signed JWT,
 4.	The JWT is given to the developer.
 5.	The EB may also publish a list of all the applications it endorses.
-6.	EBs must sign the JWT with a private key.
-7.	EBs must publish the corresponding public key at `example.com/.well-known/poet.jwks` or `/.well-known/poet.pem`.
+6.	EBs must sign the JWT with its own private key.
+7.	EBs must publish the corresponding public key at `https://[iss]/.well-known/poet.jwk`
 
 
 How Does POET Work for Developers?
@@ -38,15 +40,13 @@ How Does POET Work for Data Providers?
 4. The JWT may be obtained and associated with registered applications by other means such as a manifest file or API.
 5. Data Providers use the presence (and absence) of endorsements to display appropriate information to the end-user. For example is the signature valid, is it un
 6. Endorsements should be displayed to the end-user during the authorization/approval process.
-7. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `redirect_uri` in th JWT matches the uri registered with the OAuth2 provider.
-8. JWT verification in JavaScript browser-based applications is discouraged as it could pose a security risk.
+7. Data Providers must: a.) verify the JWT signature, b.) verify the endorsement is not expired, c.) if using OAuth2, verify the `software_id` in th JWT matches the uri registered with the OAuth2 provider.
 
 
 Example POET JWT
 ----------------
 
-The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_.
-The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key, whether an X509 certificate or a JWKS, shall be stored at the stored at the URI found in the `poet_public_key_uri` in the payload. Clients can discover the POET public key URI from the `iss` field.  Check  `[iss]/.well-known/poet.jwks` and if that is not found, check the `[iss]/.well-known/poet.pem`.
+The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _nate-trust.org_. The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key shall be a < a href="https://tools.ietf.org/html/rfc7517">JWK</a> stored at the stored `https://[iss]/.well-known/poet.jwk`.
 
 
 Example Header
@@ -62,7 +62,7 @@ Example Payload
 
     {
     "software_id": "4NRB1-0XZABZI9E6-5SM3R",
-    "iss": "https://nate-trust.org",
+    "iss": "nate-trust.org",
     "iat": 1455031265,
     "exp": 1549639265,
     "client_name" : "Cardiac Risk App",
