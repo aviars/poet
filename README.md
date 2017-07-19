@@ -57,7 +57,7 @@ Example JWT
 
 The  example signed JWT (JWS) contains information about the _Cardiac Risk App_ OAuth2 application and is signed by _transparenthealth.org.org_. The JWS is signed with a private key using the `RS256 Algorithm`.  The corresponding public key shall be <a href="https://tools.ietf.org/html/rfc7517">JWK</a> stored at `https://[iss]/.well-known/poet.jwk`.
 
-    eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6InRyYW5zcGFyZW50aGVhbHRoLm9yZyJ9.eyJpbml0aWF0ZV9sb2dpbl91cmkiOiJodHRwczovL2FwcHMtZHN0dTIuc21hcnRoZWFsdGhpdC5vcmcvY2FyZGlhYy1yaXNrL2xhdW5jaC5odG1sIiwiZXhwIjoxNTYzNDcxMDE5LCJyZWRpcmVjdF91cmlzIjpbImh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIl0sInRva2VuX2VuZHBvaW50X2F1dGhfbWV0aG9kIjoiY2xpZW50X3NlY3JldF9iYXNpYyIsImlhdCI6MTUwMDM5OTAxOSwiY2xpZW50X25hbWUiOiJDYXJkaWFjIFJpc2sgQXBwIiwiY2xpZW50X3VyaSI6Imh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBwYXRpZW50LyoucmVhZCIsImxvZ29fdXJpIjoiaHR0cHM6Ly9nYWxsZXJ5LnNtYXJ0aGVhbHRoaXQub3JnL2ltZy9hcHBzLzY2LnBuZyIsInNvZnR3YXJlX2lkIjoiNE5SQjEtMFhaQUJaSTlFNi01U00zUiIsImdyYW50X3R5cGVzIjpbImF1dGhvcml6YXRpb25fY29kZSJdLCJpc3MiOiJ0cmFuc3BhcmVudGhlYWx0aC5vcmcifQ.EtP7PIGRgoeGEplY5ZS63G52GwI57JSYcJP3TZ1jg00FhMCl2mjzo4a_5bcUXu9sNOPd5aWesQOIfKzPpEJuvmWg9Njgs_CLzl6NJR2xvwIAM4w330Pryeu-4jLy-2uPsghiMh6HiSnGR_W09juO3950b3H0D4DYyO46kVy7c34vSQ4Mf4Z_uZtu9ctrvUXb6HWMMn5oH1UsXkXWhLVB6AEpzlSMTcqkYVoRq0PZQB2viRvghLwC9YGYOxRlIAAZE3yCMSaNcBCnxf_uwfp1sC-8e_jqF3DgMBcL6bu9ZEYG-DGvD_8ERtryEzRz-lXITgK43vphhRoYxbPrikjqQg
+    eyJraWQiOiJlbmRvcnNlbWVudHMudHJhbnNwYXJlbnRoZWFsdGgub3JnIiwiYWxnIjoiUlMyNTYiLCJ0eXAiOiJKV1QifQ.eyJsb2dvX3VyaSI6Imh0dHBzOi8vZ2FsbGVyeS5zbWFydGhlYWx0aGl0Lm9yZy9pbWcvYXBwcy82Ni5wbmciLCJpYXQiOjE1MDA0OTIwNjQsInJlZGlyZWN0X3VyaXMiOlsiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay8iXSwiZXhwIjoxNTYzNTY0MDY0LCJjbGllbnRfdXJpIjoiaHR0cHM6Ly9hcHBzLWRzdHUyLnNtYXJ0aGVhbHRoaXQub3JnL2NhcmRpYWMtcmlzay8iLCJpc3MiOiJlbmRvcnNlbWVudHMudHJhbnNwYXJlbnRoZWFsdGgub3JnIiwic29mdHdhcmVfaWQiOiI0TlJCMS0wWFpBQlpJOUU2LTVTTTNSIiwiZ3JhbnRfdHlwZXMiOlsiYXV0aG9yaXphdGlvbl9jb2RlIl0sImluaXRpYXRlX2xvZ2luX3VyaSI6Imh0dHBzOi8vYXBwcy1kc3R1Mi5zbWFydGhlYWx0aGl0Lm9yZy9jYXJkaWFjLXJpc2svbGF1bmNoLmh0bWwiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIHBhdGllbnQvKi5yZWFkIiwiY2xpZW50X25hbWUiOiJDYXJkaWFjIFJpc2sgQXBwIiwidG9rZW5fZW5kcG9pbnRfYXV0aF9tZXRob2QiOiJjbGllbnRfc2VjcmV0X2Jhc2ljIn0.jcAig3s45Z3W0i6mKXaJCLP1QgVhnDvUTooSXiiIr6tAG7hsGlJo6I3-MD7gH78sCFDuOCHC_HZaLKQL00L5ma4qcA8KwTTboXkorFCLdqp3YIffKOZQZPupBvafkifHoW2vyG7kAVSlzHo-x-rf3N_lCV5gGzXYbGMZ75ss0_F0nfyZTEFUh8GxcAMfJh9Q6ojzaCt9FA3bAvwqJDCuGbSltYawEMTc1gN2OEog213JYZ9A2IIEB3GrSfkEHsJyFdj2nWgOhB2LlnN7N7sbYTaKfMWHQEHUXvm8HK7jc6axUWVkZxFVomnWC2ZGV4H1l68iV4FTYqooZkggrkftgA
 
 
 
@@ -68,29 +68,29 @@ Example Header
     {
     "alg": "RS256",
     "typ": "JWT",
-    "kid": "transpafrenthealth.org"
+    "kid": "endorsements.transparenthealth.org"
     }
 
 Example Payload
 ---------------
 
     {
-    initiate_login_uri: "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html",
-    exp: 1563471019,
-    redirect_uris: [
-         "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
-        ],
-    token_endpoint_auth_method: "client_secret_basic",
-    iat: 1500399019,
-    client_name: "Cardiac Risk App",
-    client_uri: "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
-    scope: "openid profile patient/*.read",
-    logo_uri: "https://gallery.smarthealthit.org/img/apps/66.png",
-    software_id: "4NRB1-0XZABZI9E6-5SM3R",
-    grant_types: [
-       "authorization_code"
-    ],
-    iss: "transparenthealth.org"
+      "scope": "openid profile patient/*.read",
+      "software_id": "4NRB1-0XZABZI9E6-5SM3R",
+      "redirect_uris": [
+        "https://apps-dstu2.smarthealthit.org/cardiac-risk/"
+      ],
+      "exp": 1563564064,
+      "client_uri": "https://apps-dstu2.smarthealthit.org/cardiac-risk/",
+      "initiate_login_uri": "https://apps-dstu2.smarthealthit.org/cardiac-risk/launch.html",
+      "iat": 1500492064,
+      "iss": "endorsements.transparenthealth.org",
+      "client_name": "Cardiac Risk App",
+      "grant_types": [
+          "authorization_code"
+      ],
+      "token_endpoint_auth_method": "client_secret_basic",
+      "logo_uri": "https://gallery.smarthealthit.org/img/apps/66.png"
     }
 
 
@@ -102,7 +102,7 @@ Key Responsibilities of an Endorsing Body (EB)
 * To verify application owners own their domains to which they are binding applications (i.e. `whois`).
 * To verify that SSL and valid certificates are in place on the application's server. For example, `https://apps-dstu2.smarthealthit.org` must have a "green light" (e.g. it may not generate common web browser warnings).
 * To sign certificates with a private  key with the CN bound to the CB's domain.
-* To host the corresponding public key at http(s)://{{iss}}/.well-known/poet.pem or http(s)://{{iss}}/.well-known/poet.jwks
+* To host the corresponding public key at http(s)://{{iss}}/.well-known/poet.jwks
 
 
 Payload Fields
