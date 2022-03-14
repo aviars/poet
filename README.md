@@ -1,12 +1,11 @@
 Pre-OAuth Entity Trust (POET) - DRAFT
 ======================================
 
-POET was conceived as a means to represent third-party application endorsement for health care applications. POET’s goal is to help consumers distinguish between applications that have an endorsement versus applications that have no pedigree (i.e untrusted and could be malicious).
+"Pre-OAuth Entity Trust", or POET for short, is designed to verify entities and their applications that access one or more resource providers.POET’s goal is facilitate OAuth2 Dynamic Client Registration by trusted apps. 
 
 POET uses a <a href="https://jwt.io">JWT</a>, signed with an Endorsing Body's (EB's) private key. The EB's signature can be verified using the EB's public key.
 
-
-POET payload field definitions are based on <a href="https://tools.ietf.org/html/rfc7519">RFC 7519 - Java Web Token (JWK)</a> and <a href="https://tools.ietf.org/html/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>. Although designed to facilitate trust in OAuth2 clients,  POET can be used for non-OAuth application endorsement. Implementers may add to the payload as they see fit so long as the minimum required fields are kept.
+POET payload field definitions are based on <a href="https://tools.ietf.org/html/rfc7519">RFC 7519 - Java Web Token (JWK)</a> and <a href="https://tools.ietf.org/html/rfc7591">OAuth 2.0 Dynamic Client Registration Protocol</a>. Although designed to facilitate trust in OAuth2 clients,  POET can be used for non-OAuth2 application endorsement. Implementers may add to the payload as they see fit so long as the minimum required fields are kept.
 
 POET's public key format is <a href="https://tools.ietf.org/html/rfc7517">JSON Web Key (JWK)</a>.
 
